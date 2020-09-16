@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">android-resources</string>
     <string name="have_no">Have no account?&#160;&#160;&#160;&#160;&#160;&#160;&#160;<font color="#F57314">Register</font></string>
+    <string name="have_already">Already have an account?&#160;&#160;&#160;&#160;&#160;&#160;&#160;<font color="#F57314">Login</font></string>
 </resources>

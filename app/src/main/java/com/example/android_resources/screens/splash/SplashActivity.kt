@@ -1,7 +1,9 @@
-package com.example.android_resources.screens.main
+package com.example.android_resources.screens.splash
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.android_resources.screens.login.LoginActivity
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.parameter.parametersOf
@@ -13,9 +15,17 @@ class SplashActivity : AppCompatActivity(), KoinComponent {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.layout)
+        presenter.onCreate()
     }
 
     override fun onResume() {
         super.onResume()
+    }
+
+    companion object {
+        fun start(activity: AppCompatActivity) {
+            val intent = Intent(activity, LoginActivity::class.java)
+            activity.startActivity(intent)
+        }
     }
 }

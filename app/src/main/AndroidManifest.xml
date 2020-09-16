@@ -11,8 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".screens.main.MainActivity"/>
-        <activity android:name=".screens.main.SplashActivity"/>
-        <activity android:name=".screens.main.LoginActivity">
+        <activity android:name=".screens.login.LoginActivity"/>
+        <activity android:name=".screens.register.RegisterActivity"/>
+        <activity android:name=".screens.forgot.ForgotActivity"/>
+        <activity android:name=".screens.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
