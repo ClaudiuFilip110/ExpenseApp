@@ -3,6 +3,8 @@ package com.example.android_resources.screens.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 import org.koin.core.context.GlobalContext.get

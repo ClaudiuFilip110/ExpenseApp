@@ -5,6 +5,7 @@ import com.example.android_resources.data.database.AppDatabase
 import com.example.android_resources.data.database.RoomDB
 import com.example.android_resources.data.database.entities.User
 import com.example.android_resources.data.database.repositories.UserRepository
+import kotlinx.android.synthetic.main.toolbar.view.*
 
 class MainPresenter(private val mainView: MainView, private val userRepository: UserRepository) {
     fun onCreate() {

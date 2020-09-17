@@ -15,5 +15,4 @@ class MainView(private val activity: MainActivity) {
         Toast.makeText(activity.baseContext, "Test MPV with Koin", Toast.LENGTH_LONG).show()
     }
 
-
 }
