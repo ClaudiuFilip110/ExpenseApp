@@ -16,9 +16,7 @@ class UserRepository(private val db: AppDatabase) {
 
     fun getUsers(): ArrayList<User> {
         val users: ArrayList<User> = ArrayList<User>()
-        Log.d("user", "---list of all users")
         for (user: User in db.userDao().getAll()) {
-            Log.d("user", user.name + " " + user.email)
             users.add(user)
         }
         return users

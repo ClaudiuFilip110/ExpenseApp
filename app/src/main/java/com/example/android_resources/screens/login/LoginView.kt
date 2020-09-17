@@ -37,10 +37,6 @@ class LoginView(private val activity: LoginActivity) {
         }
     }
 
-    fun login() {
-        MainActivity.start(activity)
-    }
-
     fun register() {
         layout.login_register.setOnClickListener {
             RegisterActivity.start(activity)
@@ -79,5 +75,9 @@ class LoginView(private val activity: LoginActivity) {
         Toast.makeText(activity.baseContext, "Incorrect email or password", Toast.LENGTH_LONG).show()
         layout.login_email_layout.error = ""
         layout.login_password_layout.error = ""
+    }
+
+    fun login() {
+        activity.login()
     }
 }

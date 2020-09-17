@@ -5,6 +5,8 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.example.android_resources.R
+import com.example.android_resources.data.database.entities.User
+import com.example.android_resources.screens.login.LoginActivity
 import com.example.android_resources.screens.main.MainActivity
 import com.example.android_resources.screens.splash.SplashView
 import kotlinx.android.synthetic.main.activity_login.view.*
@@ -14,10 +16,14 @@ import java.util.regex.Pattern
 class RegisterView(private val activity: RegisterActivity) {
     val layout: View = View.inflate(activity, R.layout.activity_register, null)
 
+    init {
+        register()
+    }
+
     fun backToLogin() {
-        layout.register_login.setOnClickListener(View.OnClickListener {
-            activity.finish()
-        })
+        layout.register_login.setOnClickListener {
+            activity.finishRActivity()
+        }
     }
 
     fun register() {
@@ -25,14 +31,23 @@ class RegisterView(private val activity: RegisterActivity) {
             if (validateName()) {
                 if (validateEmail()) {
                     if (validatePassword()) {
-                        MainActivity.start(activity)
+                        //send user to Activity
+                        var user = User()
+                        user.name = layout.register_name_text.text.toString()
+                        user.email = layout.register_email_text.text.toString()
+                        user.password = layout.register_password_text.text.toString()
+                        activity.sendUser(user)
+
+                        //back to login
+                        activity.finishRActivity()
                     } else {
                         layout.register_password_text.requestFocus()
-                        layout.register_password_text.error = "Incorrect password"
+                        layout.register_password_text.error =
+                            "Password must contain at least 1 number and must be at least 4 characters long"
                     }
                 } else {
                     layout.register_email_text.requestFocus()
-                    layout.register_email_text.error = "Incorrect Email"
+                    layout.register_email_text.error = "Incorrect email"
                 }
             } else {
                 layout.register_name_text.requestFocus()
@@ -74,5 +89,13 @@ class RegisterView(private val activity: RegisterActivity) {
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
             return false
         return true
+    }
+
+    fun correctInsertion() {
+        Toast.makeText(
+            activity.baseContext,
+            "User has been succesfully inserted",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

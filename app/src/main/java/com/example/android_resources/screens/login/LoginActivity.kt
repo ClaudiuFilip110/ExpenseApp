@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android_resources.data.database.entities.User
+import com.example.android_resources.screens.main.MainActivity
 import org.koin.core.KoinComponent
 import org.koin.core.context.GlobalContext.get
 import org.koin.core.inject
@@ -27,6 +28,11 @@ class LoginActivity : AppCompatActivity(), KoinComponent {
 
     fun sendUserToActivity(user: User) {
         presenter.sendUserToPresenter(user)
+    }
+
+    fun login() {
+        MainActivity.start(this)
+        finish()
     }
 
     companion object {
