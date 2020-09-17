@@ -31,6 +31,7 @@ class LoginActivity : AppCompatActivity(), KoinComponent {
     }
 
     fun login() {
+        Log.d("user", "start main activity")
         MainActivity.start(this)
         finish()
     }

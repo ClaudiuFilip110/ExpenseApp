@@ -9,7 +9,7 @@ interface UserDao {
     fun getAll(): List<User>
 
     @Query("SELECT * FROM Users WHERE email LIKE :email")
-    fun getByEmail(email: String?): User
+    fun getByEmail(email: String?): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User)

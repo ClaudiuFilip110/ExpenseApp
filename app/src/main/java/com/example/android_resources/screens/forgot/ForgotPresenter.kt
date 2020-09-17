@@ -11,7 +11,7 @@ class ForgotPresenter(val forgotView: ForgotView, val userRepository: UserReposi
     }
 
     fun sendEmailToPresenter(user: User) {
-        val userD: User? = userRepository.getUserByMail(user)
+        val userD: User? = userRepository.getUserByMail(user) ?: return
         if (userD == null) {
             forgotView.userNotFound()
             return

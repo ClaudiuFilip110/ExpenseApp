@@ -14,7 +14,7 @@ import org.koin.dsl.module
 
 val presentersModules: Module = module {
     factory { (view: MainView) -> MainPresenter(view, get()) }
-    factory { (view: SplashView) -> SplashPresenter(view) }
+    factory { (view: SplashView) -> SplashPresenter(view, get()) }
     factory { (view: LoginView) -> LoginPresenter(view, get()) }
     factory { (view: RegisterView) -> RegisterPresenter(view, get()) }
     factory { (view: ForgotView) -> ForgotPresenter(view, get()) }
