@@ -5,11 +5,6 @@ import android.util.Log
 import com.example.android_resources.data.database.entities.AutoLoginData
 import com.example.android_resources.data.database.entities.User
 import com.example.android_resources.data.database.repositories.UserRepository
-import com.example.android_resources.data.preferences.Preferences
-import java.util.*
-import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
 
 class LoginPresenter(private val loginView: LoginView, val userRepository: UserRepository) {
     var userInput: User = User()

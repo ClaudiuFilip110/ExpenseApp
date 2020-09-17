@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_login.view.*
 import android.util.Patterns
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.android_resources.data.Crypto.Crypto
 import com.example.android_resources.data.database.entities.User
 import com.example.android_resources.data.preferences.Preferences
 import java.util.*
@@ -34,7 +35,7 @@ class LoginView(private val activity: LoginActivity) {
                 val user = User()
                 user.email = layout.login_email_text.text.toString()
                 user.password = layout.login_password_text.text.toString()
-                val encPassword = Preferences.encrypt(user.password)
+                val encPassword = Crypto.encrypt(user.password)
                 if (encPassword != null) {
                     user.password = encPassword
                 }

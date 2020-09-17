@@ -5,12 +5,8 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.example.android_resources.R
+import com.example.android_resources.data.Crypto.Crypto
 import com.example.android_resources.data.database.entities.User
-import com.example.android_resources.data.preferences.Preferences
-import com.example.android_resources.screens.login.LoginActivity
-import com.example.android_resources.screens.main.MainActivity
-import com.example.android_resources.screens.splash.SplashView
-import kotlinx.android.synthetic.main.activity_login.view.*
 import kotlinx.android.synthetic.main.activity_register.view.*
 import java.util.regex.Pattern
 
@@ -37,7 +33,7 @@ class RegisterView(private val activity: RegisterActivity) {
                         user.name = layout.register_name_text.text.toString()
                         user.email = layout.register_email_text.text.toString()
                         user.password = layout.register_password_text.text.toString()
-                        val encPassword = Preferences.encrypt(user.password)
+                        val encPassword = Crypto.encrypt(user.password)
                         if (encPassword != null) {
                             user.password = encPassword
                         }
