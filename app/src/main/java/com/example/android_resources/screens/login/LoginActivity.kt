@@ -36,6 +36,10 @@ class LoginActivity : AppCompatActivity(), KoinComponent {
         finish()
     }
 
+    fun deleteUsers() {
+        presenter.deleteUsers()
+    }
+
     companion object {
         fun start(activity: AppCompatActivity) {
             val intent = Intent(activity, LoginActivity::class.java)

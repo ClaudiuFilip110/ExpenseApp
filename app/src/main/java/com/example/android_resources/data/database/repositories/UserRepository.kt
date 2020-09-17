@@ -6,12 +6,17 @@ import com.example.android_resources.data.database.entities.AutoLoginData
 import com.example.android_resources.data.database.entities.User
 
 class UserRepository(private val db: AppDatabase) {
+    //----------------------------------------------USER
     fun insertUser(user: User) {
         db.userDao().insertUser(user)
     }
 
     fun getUserByMail(user: User): User? {
-        return db.userDao().getByEmail(user.email) ?: return null
+        return db.userDao().getByEmail(user.email)
+    }
+
+    fun getUserByMailAndPassword(user: User): User? {
+        return db.userDao().getByEmailAndPass(user.email, user.password)
     }
 
     fun getUsers(): ArrayList<User> {
@@ -22,8 +27,13 @@ class UserRepository(private val db: AppDatabase) {
         return users
     }
 
+    fun deleteUsers() {
+        db.userDao().deleteAll()
+    }
+
+    //----------------------------------------------AUTOLOGINDATA
     fun getAutoLoginUser(): AutoLoginData? {
-        return db.autoLoginDao().getUser() ?: return null
+        return db.autoLoginDao().getUser()
     }
 
     fun insertAutoLoginUser(autoLoginData: AutoLoginData) {

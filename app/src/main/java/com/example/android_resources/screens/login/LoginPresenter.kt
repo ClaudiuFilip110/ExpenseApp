@@ -1,9 +1,15 @@
 package com.example.android_resources.screens.login
 
+import android.os.Build
 import android.util.Log
 import com.example.android_resources.data.database.entities.AutoLoginData
 import com.example.android_resources.data.database.entities.User
 import com.example.android_resources.data.database.repositories.UserRepository
+import com.example.android_resources.data.preferences.Preferences
+import java.util.*
+import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
 
 class LoginPresenter(private val loginView: LoginView, val userRepository: UserRepository) {
     var userInput: User = User()
@@ -12,21 +18,19 @@ class LoginPresenter(private val loginView: LoginView, val userRepository: UserR
 
     fun sendUserToPresenter(user: User) {
         this.userInput = user
-        val userD: User? = userRepository.getUserByMail(user)
+//        Log.d("user","USERS-------------------")
+//        for (userr: User in userRepository.getUsers()) {
+//            Log.d("user",userr.toString())
+//        }
+        val userD: User? = userRepository.getUserByMailAndPassword(user)
         if (userD == null) {
             loginView.incorrectCredentials()
             Log.e("user", "the user doesn't exist in the database")
             return
         }
-        Log.d("user", userD.toString())
-        Log.d("user", user.toString())
-        if (userD.password == user.password) {
-            loginView.login()
-            //add to AutoLoginDatabase
-            addToAutoLoginDB(userD)
-        } else {
-            loginView.incorrectCredentials()
-        }
+        loginView.login()
+        //add to AutoLoginDatabase
+        addToAutoLoginDB(userD)
     }
 
     private fun addToAutoLoginDB(user: User) {
@@ -37,5 +41,9 @@ class LoginPresenter(private val loginView: LoginView, val userRepository: UserR
         autologin.name = getUser.name
         autologin.password = getUser.password
         userRepository.insertAutoLoginUser(autologin)
+    }
+
+    fun deleteUsers() {
+        userRepository.deleteUsers()
     }
 }
