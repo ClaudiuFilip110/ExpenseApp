@@ -13,6 +13,7 @@
         <activity android:name=".screens.main.MainActivity"/>
         <activity android:name=".screens.login.LoginActivity"/>
         <activity android:name=".screens.register.RegisterActivity"/>
+        <activity android:name=".screens.converter.ConverterActivity"/>
         <activity android:name=".screens.forgot.ForgotActivity"/>
         <activity android:name=".screens.splash.SplashActivity">
             <intent-filter>

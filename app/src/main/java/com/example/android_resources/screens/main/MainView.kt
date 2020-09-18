@@ -1,18 +1,85 @@
 package com.example.android_resources.screens.main
 
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentTransaction
 import com.example.android_resources.R
 import com.example.android_resources.data.database.RoomDB
 import com.example.android_resources.data.database.entities.User
 import com.example.android_resources.data.database.repositories.UserRepository
+import com.example.android_resources.screens.budget.BudgetFragment
+import com.example.android_resources.screens.converter.ConverterActivity
+import com.example.android_resources.screens.expenses.ExpensesFragment
+import com.example.android_resources.screens.register.RegisterActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_budget.view.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class MainView(private val activity: MainActivity) {
     val layout: View = View.inflate(activity, R.layout.activity_main, null)
 
-    fun showToastOnResume() {
-        Toast.makeText(activity.baseContext, "Test MPV with Koin", Toast.LENGTH_LONG).show()
+    fun clickOnDrawerItem() {
+        layout.nav_item_main_page.setOnClickListener {
+            MainActivity.start(activity)
+            activity.finish()
+        }
+
+        layout.nav_item_converter.setOnClickListener {
+            ConverterActivity.start(activity)
+        }
+
+        layout.nav_item_logout.setOnClickListener {
+            activity.logout()
+        }
     }
 
+    init {
+        clickOnDrawerItem()
+        initBtmNav()
+    }
+
+    fun initDrawer(drawer_layout: DrawerLayout, toolbar: androidx.appcompat.widget.Toolbar) {
+        activity.supportActionBar
+        val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+            activity,
+            drawer_layout,
+            toolbar,
+            (R.string.open),
+            (R.string.close)
+        ) {}
+        drawerToggle.isDrawerIndicatorEnabled = true
+        drawer_layout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+    }
+
+    fun initFragment() {
+        val budgetFragment = BudgetFragment()
+        activity.supportFragmentManager.beginTransaction()
+            .replace(R.id.main_fragment, budgetFragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit()
+    }
+
+    fun initBtmNav() {
+        layout.main_btmNav.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.btm_nav_budget -> {
+                    val budgetFragment = BudgetFragment()
+                    activity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragment, budgetFragment).commit()
+                }
+                R.id.btm_nav_expenses -> {
+                    val expensesFragment = ExpensesFragment()
+                    activity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragment, expensesFragment).commit()
+                }
+            }
+            true
+        }
+    }
 }

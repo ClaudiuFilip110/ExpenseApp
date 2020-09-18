@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.budget.BudgetFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/budget_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Base information"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.199"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.022" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/budget_cur_bal_card"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:backgroundTint="#DBF0EE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/budget_title"
+            app:layout_constraintTop_toBottomOf="@id/budget_title"
+            app:layout_constraintVertical_bias="0.026">
+
+            <TextView
+                android:id="@+id/budget_cur_bal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Current balance"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/budget_cur_bal_nr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="1080.00"
+                android:textColor="@color/colorPrimary" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/budget_today_exp_card"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:backgroundTint="#F9DEDE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/budget_title"
+            app:layout_constraintTop_toBottomOf="@+id/budget_cur_bal_card"
+            app:layout_constraintVertical_bias="0.017">
+
+            <TextView
+                android:id="@+id/budget_today_exp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Today's Expenses"
+                android:textColor="#C41616" />
+
+            <TextView
+                android:id="@+id/budget_today_exp_nr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="1080.00"
+                android:textColor="#C41616" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/budget_week_exp_card"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/budget_title"
+            app:layout_constraintTop_toBottomOf="@+id/budget_today_exp_card"
+            app:layout_constraintVertical_bias="0.017">
+
+            <TextView
+                android:id="@+id/budget_week_exp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="This week's expenses"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/budget_week_exp_nr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="1080.00"
+                android:textColor="@color/colorPrimary" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/budget_month_exp_card"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/budget_title"
+            app:layout_constraintTop_toBottomOf="@+id/budget_week_exp_card"
+            app:layout_constraintVertical_bias="0.017">
+
+            <TextView
+                android:id="@+id/budget_month_exp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="This month's expenses"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/budget_month_exp_nr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="1080.00"
+                android:textColor="@color/colorPrimary" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/budget_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Details"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/budget_month_exp_card"
+            app:layout_constraintTop_toBottomOf="@id/budget_month_exp_card"
+            app:layout_constraintVertical_bias="0.05" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/budget_chart"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/budget_month_exp_card"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/budget_details"
+            app:layout_constraintTop_toBottomOf="@id/budget_details"
+            app:layout_constraintVertical_bias="0.05" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -2,7 +2,12 @@ package com.example.android_resources.screens.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
+import com.example.android_resources.R
+import com.example.android_resources.screens.budget.BudgetFragment
+import com.example.android_resources.screens.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.android.ext.android.inject
@@ -18,11 +23,20 @@ class MainActivity : AppCompatActivity(), KoinComponent {
         super.onCreate(savedInstanceState)
         setContentView(view.layout)
         presenter.onCreate()
+        setSupportActionBar(toolbar)
+        view.initDrawer(drawer_layout, toolbar)
+        view.initFragment()
+
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume()
+    }
+
+    fun logout() {
+        presenter.removeAutoLogin()
+        LoginActivity.start(this)
+        finish()
     }
 
     companion object {

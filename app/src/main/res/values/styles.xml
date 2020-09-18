@@ -28,10 +28,21 @@
         <item name="colorControlActivated">#01A39D</item>
     </style>
 
+    <style name="EraseHint" parent="TextAppearance.Design.Hint">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:text"></item>
+        <item name="android:textColorHint">#8B8B8B</item>
+        <item name="android:textSize">15sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">#01A39D</item>
+        <item name="colorControlNormal">#01A39D</item>
+        <item name="colorControlActivated">#01A39D</item>
+    </style>
+
     <style name="Drawer">
         <item name="android:textColor">#000000</item>
         <item name="android:textSize">20dp</item>
-        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="fontFamily">@font/roboto_medium</item>
     </style>
 
 

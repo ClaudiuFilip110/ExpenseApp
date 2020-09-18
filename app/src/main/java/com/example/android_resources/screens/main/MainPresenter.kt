@@ -26,7 +26,7 @@ class MainPresenter(private val mainView: MainView, private val userRepository: 
 //            }
     }
 
-    fun onResume() {
-        mainView.showToastOnResume()
+    fun removeAutoLogin() {
+        userRepository.deleteAutoLoginUser()
     }
 }

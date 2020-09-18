@@ -6,4 +6,22 @@ object Constants {
     const val DATABASE_VERSION = 2
     const val DATABASE_NAME = "Room-Database"
     const val SHARED_PREFERENCES_NAME: String = "Share-Pref's"
+    const val MAX_X_VALUE = 12
+    const val MAX_Y_VALUE = 100
+    const val MIN_Y_VALUE = -40
+    val MONTHS =
+        arrayOf(
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "June",
+            "July",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        )
 }
