@@ -1,25 +1,15 @@
 package com.example.android_resources.screens.main
 
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
 import com.example.android_resources.R
-import com.example.android_resources.data.database.RoomDB
-import com.example.android_resources.data.database.entities.User
-import com.example.android_resources.data.database.repositories.UserRepository
 import com.example.android_resources.screens.budget.BudgetFragment
 import com.example.android_resources.screens.converter.ConverterActivity
 import com.example.android_resources.screens.expenses.ExpensesFragment
-import com.example.android_resources.screens.register.RegisterActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.fragment_budget.view.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 class MainView(private val activity: MainActivity) {
     val layout: View = View.inflate(activity, R.layout.activity_main, null)
@@ -61,7 +51,7 @@ class MainView(private val activity: MainActivity) {
     fun initFragment() {
         val budgetFragment = BudgetFragment()
         activity.supportFragmentManager.beginTransaction()
-            .replace(R.id.main_fragment, budgetFragment)
+            .add(R.id.main_fragment, budgetFragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit()
     }
 

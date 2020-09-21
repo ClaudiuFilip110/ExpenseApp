@@ -44,6 +44,4 @@
         <item name="android:textSize">20dp</item>
         <item name="fontFamily">@font/roboto_medium</item>
     </style>
-
-
 </resources>
