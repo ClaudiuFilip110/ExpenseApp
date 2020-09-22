@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.android_resources.R
 import kotlinx.android.synthetic.main.activity_converter.view.*
+import kotlinx.android.synthetic.main.toolbar_back_arrow.view.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.text.Typography.times
@@ -19,6 +20,13 @@ class ConverterView(private val activity: ConverterActivity) {
 
     init {
         set_clicks()
+        goBack()
+    }
+
+    fun goBack() {
+        layout.toolbar_back_image.setOnClickListener {
+            activity.goBack()
+        }
     }
 
     fun set_clicks() {

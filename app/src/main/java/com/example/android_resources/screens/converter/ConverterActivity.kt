@@ -22,6 +22,10 @@ class ConverterActivity : AppCompatActivity(), KoinComponent {
         presenter.receiveFromAct(s, s1, s2)
     }
 
+    fun goBack() {
+        finish()
+    }
+
     companion object {
         fun start(activity: AppCompatActivity) {
             val intent = Intent(activity, ConverterActivity::class.java)
