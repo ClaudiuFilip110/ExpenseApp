@@ -2,6 +2,7 @@ package com.example.android_resources.screens.main
 
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
@@ -10,6 +11,7 @@ import com.example.android_resources.screens.budget.BudgetFragment
 import com.example.android_resources.screens.converter.ConverterActivity
 import com.example.android_resources.screens.expenses.ExpensesFragment
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 
 class MainView(private val activity: MainActivity) {
     val layout: View = View.inflate(activity, R.layout.activity_main, null)
@@ -32,6 +34,13 @@ class MainView(private val activity: MainActivity) {
     init {
         clickOnDrawerItem()
         initBtmNav()
+        clickOnPlus()
+    }
+
+    fun clickOnPlus() {
+        layout.toolbar_plus.setOnClickListener {
+            activity.startAction()
+        }
     }
 
     fun initDrawer(drawer_layout: DrawerLayout, toolbar: androidx.appcompat.widget.Toolbar) {

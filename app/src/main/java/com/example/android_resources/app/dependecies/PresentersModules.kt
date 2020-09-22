@@ -1,5 +1,7 @@
 package com.example.android_resources.app.dependecies
 
+import com.example.android_resources.screens.action.ActionPresenter
+import com.example.android_resources.screens.action.ActionView
 import com.example.android_resources.screens.converter.ConverterPresenter
 import com.example.android_resources.screens.converter.ConverterView
 import com.example.android_resources.screens.forgot.ForgotPresenter
@@ -21,4 +23,5 @@ val presentersModules: Module = module {
     factory { (view: RegisterView) -> RegisterPresenter(view, get()) }
     factory { (view: ForgotView) -> ForgotPresenter(view, get()) }
     factory { (view: ConverterView) -> ConverterPresenter(view, get()) }
+    factory { (view: ActionView) -> ActionPresenter(view, get()) }
 }

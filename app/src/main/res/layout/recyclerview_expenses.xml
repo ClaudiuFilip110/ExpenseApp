@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="90dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 
@@ -32,21 +32,21 @@
             android:id="@+id/card_expenses_image"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/image"
-            app:layout_constraintTop_toBottomOf="@id/card_expenses_day"
+            android:src="@drawable/food"
             app:layout_constraintLeft_toLeftOf="@id/card_expenses_day"
-            app:layout_constraintRight_toRightOf="@id/card_expenses_day"/>
+            app:layout_constraintRight_toRightOf="@id/card_expenses_day"
+            app:layout_constraintTop_toBottomOf="@id/card_expenses_day" />
 
         <TextView
             android:id="@+id/card_expenses_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Food"
-            android:textSize="13dp"
-            android:textColor="#000000"
             android:fontFamily="@font/roboto_medium"
-            app:layout_constraintTop_toBottomOf="@id/card_expenses_image"
-            app:layout_constraintLeft_toLeftOf="@id/card_expenses_image"/>
+            android:text="Food"
+            android:textColor="#000000"
+            android:textSize="13dp"
+            app:layout_constraintLeft_toLeftOf="@id/card_expenses_image"
+            app:layout_constraintTop_toBottomOf="@id/card_expenses_image" />
 
         <TextView
             android:id="@+id/card_expenses_amount"

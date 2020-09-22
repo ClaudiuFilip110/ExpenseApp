@@ -3,6 +3,7 @@ package com.example.android_resources.screens.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.android_resources.screens.action.ActionActivity
 import com.example.android_resources.screens.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -32,6 +33,10 @@ class MainActivity : AppCompatActivity(), KoinComponent {
         presenter.removeAutoLogin()
         LoginActivity.start(this)
         finish()
+    }
+
+    fun startAction() {
+        ActionActivity.start(this)
     }
 
     companion object {

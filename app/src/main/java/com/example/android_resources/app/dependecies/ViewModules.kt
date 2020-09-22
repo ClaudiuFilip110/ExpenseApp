@@ -1,5 +1,7 @@
 package com.example.android_resources.app.dependecies
 
+import com.example.android_resources.screens.action.ActionActivity
+import com.example.android_resources.screens.action.ActionView
 import com.example.android_resources.screens.converter.ConverterActivity
 import com.example.android_resources.screens.converter.ConverterView
 import com.example.android_resources.screens.forgot.ForgotActivity
@@ -21,4 +23,5 @@ val viewsModule: Module = module {
     factory { (activity: RegisterActivity) -> RegisterView(activity) }
     factory { (activity: ForgotActivity) -> ForgotView(activity) }
     factory { (activity: ConverterActivity) -> ConverterView(activity) }
+    factory { (activity: ActionActivity) -> ActionView(activity) }
 }
