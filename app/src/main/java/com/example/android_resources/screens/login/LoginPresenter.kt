@@ -13,10 +13,10 @@ class LoginPresenter(private val loginView: LoginView, val userRepository: UserR
 
     fun sendUserToPresenter(user: User) {
         this.userInput = user
-//        Log.d("user","USERS-------------------")
-//        for (userr: User in userRepository.getUsers()) {
-//            Log.d("user",userr.toString())
-//        }
+        Log.d("user","USERS-------------------")
+        for (userr: User in userRepository.getUsers()) {
+            Log.d("user",userr.toString())
+        }
         val userD: User? = userRepository.getUserByMailAndPassword(user)
         if (userD == null) {
             loginView.incorrectCredentials()
