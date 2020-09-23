@@ -44,6 +44,10 @@ class ActionActivity : AppCompatActivity(), KoinComponent {
         ActivityCompat.startActivityForResult(this, intent, ActionActivity.IMAGE_PICK_CODE, null)
     }
 
+    fun addToDB(action: Action) {
+        presenter.addToDB(action)
+    }
+
     companion object {
         fun start(activity: AppCompatActivity) {
             val intent = Intent(activity, ActionActivity::class.java)

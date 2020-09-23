@@ -52,17 +52,47 @@ class ActionView(private val activity: ActionActivity) {
 
     fun save() {
         layout.toolbar_save.setOnClickListener {
-            Toast.makeText(activity.baseContext, "SAVE", Toast.LENGTH_SHORT).show()
-//            activity.passObject()
-//            if (validateDate()) {
-//                Toast.makeText(activity.baseContext, "Date validated", Toast.LENGTH_SHORT)
-//                    .show()
-//                if (validateAmount()) {
-//                    Toast.makeText(activity.baseContext, "Amount validated", Toast.LENGTH_SHORT)
-//                        .show()
-//                }
-//            }
-            validateCategory()
+            category = ActionView.category
+//            Toast.makeText(activity.baseContext, "SAVE", Toast.LENGTH_SHORT).show()
+            if (validateDate()) {
+                Toast.makeText(activity.baseContext, "Date validated", Toast.LENGTH_SHORT)
+                    .show()
+                if (validateAmount()) {
+                    Toast.makeText(activity.baseContext, "Amount validated", Toast.LENGTH_SHORT)
+                        .show()
+                    if (validateCategory()) {
+                        Toast.makeText(
+                            activity.baseContext,
+                            "Category validated",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        //add object to db
+                        var action = Action()
+                        var date1 = tryConversion(layout.action_date_text.text.toString())
+                        if (date1 != null) {
+                            action.date = date1
+                            action.amount = layout.action_amount_text.text.toString().toDouble()
+                            action.category = category
+                            action.details = layout.action_details_text.text.toString()
+                            activity.addToDB(action)
+                        }
+                    } else {
+                        Toast.makeText(
+                            activity.baseContext,
+                            "choose a category",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                } else {
+                    Toast.makeText(activity.baseContext, "amount can't be null", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else {
+                Toast.makeText(activity.baseContext, "date can't be null", Toast.LENGTH_SHORT)
+                    .show()
+            }
 
 
         }
@@ -86,7 +116,6 @@ class ActionView(private val activity: ActionActivity) {
 
     private fun validateAmount(): Boolean {
         if (layout.action_amount_text.text.isNullOrEmpty()) {
-            Toast.makeText(activity.baseContext, "amount can't be null", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
@@ -94,43 +123,50 @@ class ActionView(private val activity: ActionActivity) {
 
     private fun validateDate(): Boolean {
         if (layout.action_date_text.text.isNullOrEmpty()) {
-            Toast.makeText(activity.baseContext, "date can't be null", Toast.LENGTH_SHORT).show()
             return false
         }
         val sDate1 = layout.action_date_text.text.toString()
+        val sDateConv = tryConversion(sDate1)
+        if (sDateConv != null)
+            return true
+        return false
+    }
+
+    private fun validateDetails(): Boolean {
+        if (layout.action_details_text.text.isNullOrEmpty()) {
+            return false
+        }
+        return true
+    }
+
+    fun tryConversion(sDate1: String): Date? {
         try {
             var date1: Date = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(sDate1)
             Log.d("date", "$sDate1 before + \"\\t\" + $date1 after")
-            return true
+            return date1
         } catch (e: Exception) {
             try {
                 var date2: Date = SimpleDateFormat("dd-MM-yyyy").parse(sDate1)
                 Log.d("date", "$sDate1 before + \"\\t\" + $date2 after")
-                return true
+                return date2
             } catch (e: Exception) {
                 Toast.makeText(activity.baseContext, "date format incorrect", Toast.LENGTH_SHORT)
                     .show()
             }
         }
-        return false
+        return null
     }
 
-    private fun addCategory() {
-//        layout.action_recycler_view.setOnClickListener {
-//            Toast.makeText(activity.baseContext, "recycler clicked", Toast.LENGTH_SHORT).show()
-//            category = layout.action_recycler_view.action_rec_text.text.toString()
-//        }
-    }
-
-
-    private fun validateCategory() {
-        if (category.isEmpty()) {
+    private fun validateCategory(): Boolean {
+        if (category.isNullOrEmpty()) {
             Log.d("category", "category is null")
+            return false
         }
         Log.d("category", "category is $category")
+        return true
     }
 
-    init {
-//        addCategory()
+    companion object {
+        var category = String()
     }
 }

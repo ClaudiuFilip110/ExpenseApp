@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_resources.R
 import com.example.android_resources.data.database.entities.Action
+import com.example.android_resources.screens.action.ActionView
 import kotlinx.android.synthetic.main.recyclerview_action.view.*
 
 
@@ -39,6 +40,7 @@ class ActionsAdapter(var mActions: ArrayList<Action>) :
                 cardView.setBackgroundResource(R.drawable.card_edge_selected)
             }
             holder.card.setBackgroundResource(R.drawable.card_edge)
+            ActionView.category = holder.text.text.toString()
         }
     }
 

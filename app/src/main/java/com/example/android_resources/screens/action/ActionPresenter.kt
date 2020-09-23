@@ -1,5 +1,6 @@
 package com.example.android_resources.screens.action
 
+import android.util.Log
 import android.view.MotionEvent
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,5 +37,22 @@ class ActionPresenter(
 
         recycler.adapter = ActionsAdapter(list)
 
+    }
+
+    fun addToDB(action: Action) {
+        userRepository.insertAction(action)
+        viewUsers()
+    }
+
+    fun viewUsers() {
+        val actions: ArrayList<Action> = userRepository.getActions()
+        if (actions.size == 0) {
+            Log.d("ACTIONS", "no actions in the db")
+        } else {
+            Log.d("ACTIONS", "ACTIONS----------")
+            for (action: Action in userRepository.getActions()) {
+                Log.d("ACTIONS", action.toString())
+            }
+        }
     }
 }

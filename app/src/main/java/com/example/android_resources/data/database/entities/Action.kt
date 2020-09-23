@@ -7,7 +7,7 @@ import com.example.android_resources.data.database.type_converters.DateConverter
 import java.util.*
 
 @Entity(tableName = "Actions")
-class Action(
+data class Action(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     @TypeConverters(DateConverter::class)

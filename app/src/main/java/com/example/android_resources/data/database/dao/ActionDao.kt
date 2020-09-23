@@ -13,7 +13,7 @@ interface ActionDao {
     fun getAll(): List<Action>
 
     @Query("SELECT * FROM actions WHERE category LIKE :category")
-    fun getByEmail(category: String?): Action?
+    fun getByCategory(category: String): Action?
 
     @Insert
     fun insertAction(action: Action)
