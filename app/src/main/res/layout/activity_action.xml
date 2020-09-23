@@ -40,6 +40,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="25dp"
             android:theme="@style/TextLabel"
+            android:hint="28-02-1998 13:00"
             app:layout_constraintLeft_toLeftOf="@id/action_date_title"
             app:layout_constraintRight_toRightOf="@id/action_date_title"
             app:layout_constraintTop_toBottomOf="@id/action_date_title">
