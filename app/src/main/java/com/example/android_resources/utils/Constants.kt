@@ -3,7 +3,7 @@ package com.example.android_resources.utils
 object Constants {
     const val EMPTY_STRING = ""
     const val DEFAULT_INDEX = -1
-    const val DATABASE_VERSION = 3
+    const val DATABASE_VERSION = 4
     const val DATABASE_NAME = "Room-Database"
     const val SHARED_PREFERENCES_NAME: String = "Share-Pref's"
     const val MAX_X_VALUE = 12

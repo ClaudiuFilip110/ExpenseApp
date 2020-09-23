@@ -30,7 +30,7 @@ class ConverterView(private val activity: ConverterActivity) {
     }
 
     fun set_clicks() {
-        layout.converter_text_euro.onFocusChangeListener = OnFocusChangeListener { v, _ ->
+        layout.converter_text_euro.onFocusChangeListener = OnFocusChangeListener { _, _ ->
             run {
                 layout.converter_text_euro_layout.hint = ""
                 layout.converter_layout.setOnClickListener {
@@ -38,7 +38,7 @@ class ConverterView(private val activity: ConverterActivity) {
                 }
             }
         }
-        layout.converter_text_lei.onFocusChangeListener = OnFocusChangeListener { v, _ ->
+        layout.converter_text_lei.onFocusChangeListener = OnFocusChangeListener { _, _ ->
             run {
                 layout.converter_text_lei_layout.hint = ""
             }

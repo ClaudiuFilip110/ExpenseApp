@@ -32,7 +32,6 @@
             android:id="@+id/card_expenses_image"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/food"
             app:layout_constraintLeft_toLeftOf="@id/card_expenses_day"
             app:layout_constraintRight_toRightOf="@id/card_expenses_day"
             app:layout_constraintTop_toBottomOf="@id/card_expenses_day" />

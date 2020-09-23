@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.android_resources.R
+import com.example.android_resources.data.database.repositories.UserRepository
 import com.example.android_resources.screens.expenses.adapters.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_expenses.view.*
 
 
-class ExpensesFragment : Fragment() {
+class ExpensesFragment() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -28,7 +29,7 @@ class ExpensesFragment : Fragment() {
                     it
                 )
         }
-
+        //cred ca aici trebuie facuta logica
         TabLayoutMediator(v.expenses_tab_layout, v.expenses_view_pager) { tab, position ->
             when (position) {
                 0 ->

@@ -24,7 +24,6 @@ import kotlin.collections.ArrayList
 
 class ActionView(private val activity: ActionActivity) {
     val layout: View = View.inflate(activity, R.layout.activity_action, null)
-    var category = String()
 
     init {
         layout.toolbar_save.visibility = TextView.VISIBLE
@@ -52,7 +51,8 @@ class ActionView(private val activity: ActionActivity) {
 
     fun save() {
         layout.toolbar_save.setOnClickListener {
-            category = ActionView.category
+//            activity.deleteActions()
+            activity.viewActions()
 //            Toast.makeText(activity.baseContext, "SAVE", Toast.LENGTH_SHORT).show()
             if (validateDate()) {
                 Toast.makeText(activity.baseContext, "Date validated", Toast.LENGTH_SHORT)
@@ -73,6 +73,7 @@ class ActionView(private val activity: ActionActivity) {
                         if (date1 != null) {
                             action.date = date1
                             action.amount = layout.action_amount_text.text.toString().toDouble()
+                            action.categoryImage = image
                             action.category = category
                             action.details = layout.action_details_text.text.toString()
                             activity.addToDB(action)
@@ -141,13 +142,13 @@ class ActionView(private val activity: ActionActivity) {
 
     fun tryConversion(sDate1: String): Date? {
         try {
-            var date1: Date = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(sDate1)
-            Log.d("date", "$sDate1 before + \"\\t\" + $date1 after")
+            var date1: Date? = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(sDate1)
+//            Log.d("date", "$sDate1 before + \"\\t\" + $date1 after")
             return date1
         } catch (e: Exception) {
             try {
-                var date2: Date = SimpleDateFormat("dd-MM-yyyy").parse(sDate1)
-                Log.d("date", "$sDate1 before + \"\\t\" + $date2 after")
+                var date2: Date? = SimpleDateFormat("dd-MM-yyyy").parse(sDate1)
+//                Log.d("date", "$sDate1 before + \"\\t\" + $date2 after")
                 return date2
             } catch (e: Exception) {
                 Toast.makeText(activity.baseContext, "date format incorrect", Toast.LENGTH_SHORT)
@@ -168,5 +169,6 @@ class ActionView(private val activity: ActionActivity) {
 
     companion object {
         var category = String()
+        var image = String()
     }
 }

@@ -48,6 +48,14 @@ class ActionActivity : AppCompatActivity(), KoinComponent {
         presenter.addToDB(action)
     }
 
+    fun viewActions(){
+        presenter.viewActions()
+    }
+
+    fun deleteActions(){
+        presenter.deleteActions()
+    }
+
     companion object {
         fun start(activity: AppCompatActivity) {
             val intent = Intent(activity, ActionActivity::class.java)
