@@ -1,26 +1,28 @@
 package com.example.android_resources.screens.action
 
-import android.content.Intent
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.os.Build
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.view.iterator
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 import com.example.android_resources.R
 import com.example.android_resources.data.database.entities.Action
-import com.example.android_resources.screens.action.adapters.ActionsAdapter
 import kotlinx.android.synthetic.main.activity_action.view.*
-import kotlinx.android.synthetic.main.activity_converter.view.*
-import kotlinx.android.synthetic.main.recyclerview_action.view.*
 import kotlinx.android.synthetic.main.toolbar_back_arrow.view.*
-import java.net.URI
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class ActionView(private val activity: ActionActivity) {
     val layout: View = View.inflate(activity, R.layout.activity_action, null)
@@ -53,30 +55,23 @@ class ActionView(private val activity: ActionActivity) {
         layout.toolbar_save.setOnClickListener {
 //            activity.deleteActions()
             activity.viewActions()
+            val lastId = activity.getLastId() + 1
 //            Toast.makeText(activity.baseContext, "SAVE", Toast.LENGTH_SHORT).show()
             if (validateDate()) {
-                Toast.makeText(activity.baseContext, "Date validated", Toast.LENGTH_SHORT)
-                    .show()
                 if (validateAmount()) {
-                    Toast.makeText(activity.baseContext, "Amount validated", Toast.LENGTH_SHORT)
-                        .show()
                     if (validateCategory()) {
-                        Toast.makeText(
-                            activity.baseContext,
-                            "Category validated",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
                         //add object to db
                         var action = Action()
                         var date1 = tryConversion(layout.action_date_text.text.toString())
                         if (date1 != null) {
                             action.date = date1
                             action.amount = layout.action_amount_text.text.toString().toDouble()
-                            action.categoryImage = image
                             action.category = category
                             action.details = layout.action_details_text.text.toString()
+                            action.detailsImage = lastId.toString() + "_pdf"
+                            storeImageInFiles(lastId)
                             activity.addToDB(action)
+                            activity.finishAct()
                         }
                     } else {
                         Toast.makeText(
@@ -94,8 +89,42 @@ class ActionView(private val activity: ActionActivity) {
                 Toast.makeText(activity.baseContext, "date can't be null", Toast.LENGTH_SHORT)
                     .show()
             }
+        }
+    }
 
+    fun storeImageInFiles(id: Int) {
+        var imageView = layout.action_details_pdf
 
+        var path = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            File(activity.dataDir, "files" + File.separator + "Images")
+        } else {
+            File("")
+        }
+        if (!path.exists()) {
+            path.mkdirs()
+        } else {
+            val outFile = File(path, id.toString() + "_pdf" + ".jpeg")
+            //write to file
+            val stream = FileOutputStream(outFile)
+            if (imageView.drawable == null)
+                return
+            var drawable = imageView.drawable
+            var bitmap = (drawable as BitmapDrawable).bitmap
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            //write to db
+            var imageView = layout.action_details_pdf
+            imageView.setImageURI(Uri.parse(outFile.toString()))
+            //asta l-am lasta aici in caz ca am nevoie mai tarziu de conversia asta
+//            bitmap = (drawable as BitmapDrawable).bitmap
+//            val byteArrayOutputStream = ByteArrayOutputStream()
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+//            val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+//            val encoded: String = Base64.encodeToString(byteArray, Base64.DEFAULT)
+//            Log.d("encoded", "image encoded $encoded")
+//
+//            Glide.with(activity)
+//                .load(encoded)
+//                .into(layout.action_details_pdf)
         }
     }
 
@@ -143,12 +172,10 @@ class ActionView(private val activity: ActionActivity) {
     fun tryConversion(sDate1: String): Date? {
         try {
             var date1: Date? = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(sDate1)
-//            Log.d("date", "$sDate1 before + \"\\t\" + $date1 after")
             return date1
         } catch (e: Exception) {
             try {
                 var date2: Date? = SimpleDateFormat("dd-MM-yyyy").parse(sDate1)
-//                Log.d("date", "$sDate1 before + \"\\t\" + $date2 after")
                 return date2
             } catch (e: Exception) {
                 Toast.makeText(activity.baseContext, "date format incorrect", Toast.LENGTH_SHORT)
@@ -163,12 +190,14 @@ class ActionView(private val activity: ActionActivity) {
             Log.d("category", "category is null")
             return false
         }
-        Log.d("category", "category is $category")
         return true
+    }
+
+    fun passContext(): Context {
+        return activity.baseContext
     }
 
     companion object {
         var category = String()
-        var image = String()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.android_resources.screens.expenses.adapters
 
+import android.content.Context
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,7 @@ import com.example.android_resources.R
 import com.example.android_resources.data.database.entities.Action
 import kotlinx.android.synthetic.main.recyclerview_expenses.view.*
 
-class ExpensesAdapter(val mPayments: ArrayList<Action>) :
+class ExpensesAdapter(val context: Context, val mPayments: ArrayList<Action>) :
     RecyclerView.Adapter<ExpensesAdapter.ExpensesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpensesViewHolder {
         val v: View =
@@ -27,9 +28,11 @@ class ExpensesAdapter(val mPayments: ArrayList<Action>) :
     override fun onBindViewHolder(holder: ExpensesViewHolder, position: Int) {
         val currentPayment = mPayments[position]
         //set image
-        val byteArray: ByteArray = Base64.decode(currentPayment.categoryImage, Base64.DEFAULT)
+        val image = currentPayment.category.toLowerCase()
+        val drawableResourceId: Int =
+            context.resources.getIdentifier(image, "drawable", context.packageName)
         Glide.with(holder.itemView)
-            .load(byteArray)
+            .load(drawableResourceId)
             .into(holder.image)
         //set text
         holder.amount.text = currentPayment.amount.toString()
@@ -39,7 +42,6 @@ class ExpensesAdapter(val mPayments: ArrayList<Action>) :
 //        } else {
 //            holder.type.text = "Income"
 //        }
-
     }
 
     class ExpensesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

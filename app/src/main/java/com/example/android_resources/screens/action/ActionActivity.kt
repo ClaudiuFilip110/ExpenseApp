@@ -2,16 +2,21 @@ package com.example.android_resources.screens.action
 
 import android.app.Activity
 import android.content.Intent
-import android.drm.DrmStore
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_resources.data.database.entities.Action
+import com.example.android_resources.screens.main.MainActivity
 import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 import org.koin.core.context.GlobalContext.get
 import org.koin.core.parameter.parametersOf
+import java.io.File
+import java.io.FileOutputStream
 
 class ActionActivity : AppCompatActivity(), KoinComponent {
     private val view: ActionView by inject { parametersOf(this) }
@@ -48,12 +53,22 @@ class ActionActivity : AppCompatActivity(), KoinComponent {
         presenter.addToDB(action)
     }
 
-    fun viewActions(){
+    fun viewActions() {
         presenter.viewActions()
     }
 
-    fun deleteActions(){
+    fun deleteActions() {
         presenter.deleteActions()
+    }
+
+    fun finishAct() {
+        val i = Intent(this, MainActivity::class.java)
+        startActivityForResult(i, 1)
+        finish()
+    }
+
+    fun getLastId(): Int {
+        return presenter.getLastId()
     }
 
     companion object {

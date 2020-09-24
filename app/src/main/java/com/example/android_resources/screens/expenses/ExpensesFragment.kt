@@ -10,9 +10,16 @@ import com.example.android_resources.data.database.repositories.UserRepository
 import com.example.android_resources.screens.expenses.adapters.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_expenses.view.*
+import org.koin.android.ext.android.inject
+import org.koin.core.KoinComponent
+import org.koin.core.context.GlobalContext
+import org.koin.core.parameter.parametersOf
 
 
-class ExpensesFragment() : Fragment() {
+class ExpensesFragment() : Fragment(), KoinComponent {
+    private val view: ExpensesView by inject { parametersOf(this) }
+    private val presenter: ExpensesPresenter by inject { parametersOf(view, GlobalContext.get()) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -21,25 +28,9 @@ class ExpensesFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val v: View = inflater.inflate(R.layout.fragment_expenses, container, false)
-
-        activity?.let {
-            v.expenses_view_pager.adapter =
-                ViewPagerAdapter(
-                    it
-                )
-        }
-        //cred ca aici trebuie facuta logica
-        TabLayoutMediator(v.expenses_tab_layout, v.expenses_view_pager) { tab, position ->
-            when (position) {
-                0 ->
-                    tab.text = "This week"
-                1 ->
-                    tab.text = "This month"
-                2 ->
-                    tab.text = "This year"
-            }
-        }.attach()
+        val v = view.layout
+        view.setViewPagerAdapter(activity)
+        view.tabMediator()
         return v
     }
 

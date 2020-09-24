@@ -23,4 +23,9 @@ interface ActionDao {
 
     @Query("DELETE from Actions")
     fun deleteAll()
+
+    @Query("SELECT id FROM Actions  \n" +
+            "ORDER BY id DESC  \n" +
+            "LIMIT 1;  ")
+    fun getLastId(): Int
 }

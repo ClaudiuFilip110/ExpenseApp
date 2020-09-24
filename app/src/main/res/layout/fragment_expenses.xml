@@ -25,32 +25,37 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This Week"
-                android:background="@color/tab_background_selector"
+                android:drawable="@color/tab_background_selector"
                 android:backgroundTint="@color/tab_background_selector" />
 
             <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="This month"
-                android:background="@color/tab_background_selector"
-                android:backgroundTint="@color/tab_background_selector"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawable="@color/tab_background_selector"
+            android:backgroundTint="@color/tab_background_selector"/>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This year"
-                android:background="@color/tab_background_selector"
+                android:drawable="@color/tab_background_selector"
                 android:backgroundTint="@color/tab_background_selector" />
         </com.google.android.material.tabs.TabLayout>
+
+<!--        <ScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/expenses_tab_layout">-->
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/expenses_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@+id/expenses_tab_layout"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+
+<!--        </ScrollView>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

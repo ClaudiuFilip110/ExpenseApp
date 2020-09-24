@@ -13,7 +13,6 @@ data class Action(
     @TypeConverters(DateConverter::class)
     var date: Date = Date(),
     var amount: Double = 0.0,
-    var categoryImage: String = "",
     var category: String = "",
     var details: String = "",
     var detailsImage: String = ""

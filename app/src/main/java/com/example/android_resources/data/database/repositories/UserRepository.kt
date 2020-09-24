@@ -68,4 +68,8 @@ class UserRepository(private val db: AppDatabase) {
     fun deletAllActions() {
         db.actionDao().deleteAll()
     }
+
+    fun getLastId(): Int {
+        return db.actionDao().getLastId()
+    }
 }
