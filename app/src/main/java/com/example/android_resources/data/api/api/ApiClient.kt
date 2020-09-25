@@ -11,9 +11,9 @@ object ApiClient {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val userService: UserService
+    val converterAPI: ConverterAPI
         get() = retrofit
-            .create<UserService>(
-                UserService::class.java
+            .create<ConverterAPI>(
+                ConverterAPI::class.java
             )
 }

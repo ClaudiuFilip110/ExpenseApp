@@ -4,7 +4,6 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.android_resources.data.api.api.ApiClient
-import com.example.android_resources.data.api.models.Info
 import com.example.android_resources.data.api.models.Request
 import com.example.android_resources.data.database.repositories.UserRepository
 import retrofit2.Call
@@ -20,7 +19,7 @@ class ConverterPresenter(
     }
 
     fun receiveFromAct(from: String, to: String, amount: String) {
-        var call: Call<Request> = ApiClient.userService.convert(API_KEY, from, to, amount)
+        var call: Call<Request> = ApiClient.converterAPI.convert(API_KEY, from, to, amount)
         call.enqueue(object : Callback<Request> {
             override fun onFailure(call: Call<Request>, t: Throwable) {
                 Log.d("Response", "response failed " + t.toString())

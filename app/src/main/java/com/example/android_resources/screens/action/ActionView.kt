@@ -3,21 +3,17 @@ package com.example.android_resources.screens.action
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
-import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.net.toUri
-import com.bumptech.glide.Glide
 import com.example.android_resources.R
 import com.example.android_resources.data.database.entities.Action
 import kotlinx.android.synthetic.main.activity_action.view.*
 import kotlinx.android.synthetic.main.toolbar_back_arrow.view.*
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -54,21 +50,26 @@ class ActionView(private val activity: ActionActivity) {
     fun save() {
         layout.toolbar_save.setOnClickListener {
 //            activity.deleteActions()
-            activity.viewActions()
+//            activity.viewActions()
             val lastId = activity.getLastId() + 1
-//            Toast.makeText(activity.baseContext, "SAVE", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity.baseContext, "SAVE", Toast.LENGTH_SHORT).show()
             if (validateDate()) {
                 if (validateAmount()) {
                     if (validateCategory()) {
                         //add object to db
-                        var action = Action()
-                        var date1 = tryConversion(layout.action_date_text.text.toString())
+                        val action = Action()
+                        val date1 = tryConversion(layout.action_date_text.text.toString())
                         if (date1 != null) {
                             action.date = date1
-                            action.amount = layout.action_amount_text.text.toString().toDouble()
                             action.category = category
+                            if (category == "Income")
+                                action.amount = layout.action_amount_text.text.toString().toDouble()
+                            else
+                                action.amount =
+                                    -layout.action_amount_text.text.toString().toDouble()
                             action.details = layout.action_details_text.text.toString()
-                            action.detailsImage = lastId.toString() + "_pdf"
+                            if (layout.action_details_pdf.drawable != null)
+                                action.detailsImage = lastId.toString() + "_pdf"
                             storeImageInFiles(lastId)
                             activity.addToDB(action)
                             activity.finishAct()
@@ -93,9 +94,8 @@ class ActionView(private val activity: ActionActivity) {
     }
 
     fun storeImageInFiles(id: Int) {
-        var imageView = layout.action_details_pdf
-
-        var path = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        val imageView = layout.action_details_pdf
+        val path = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             File(activity.dataDir, "files" + File.separator + "Images")
         } else {
             File("")
@@ -103,16 +103,14 @@ class ActionView(private val activity: ActionActivity) {
         if (!path.exists()) {
             path.mkdirs()
         } else {
-            val outFile = File(path, id.toString() + "_pdf" + ".jpeg")
+            val drawable: Drawable? = imageView.drawable ?: return
+            val bitmap = (drawable as BitmapDrawable?)?.bitmap ?: return
             //write to file
+            val outFile = File(path, id.toString() + "_pdf" + ".jpeg")
             val stream = FileOutputStream(outFile)
-            if (imageView.drawable == null)
-                return
-            var drawable = imageView.drawable
-            var bitmap = (drawable as BitmapDrawable).bitmap
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             //write to db
-            var imageView = layout.action_details_pdf
+            val imageView = layout.action_details_pdf
             imageView.setImageURI(Uri.parse(outFile.toString()))
             //asta l-am lasta aici in caz ca am nevoie mai tarziu de conversia asta
 //            bitmap = (drawable as BitmapDrawable).bitmap

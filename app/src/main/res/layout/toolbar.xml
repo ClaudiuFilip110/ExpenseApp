@@ -21,7 +21,8 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="100dp"
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
                 android:text="My budget"

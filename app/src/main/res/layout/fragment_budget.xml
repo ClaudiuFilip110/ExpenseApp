@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -189,7 +190,7 @@
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/budget_chart"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/budget_month_exp_card"
             app:layout_constraintStart_toStartOf="@id/budget_details"

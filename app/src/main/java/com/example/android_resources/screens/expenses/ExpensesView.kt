@@ -26,9 +26,13 @@ class ExpensesView(private val fragment: ExpensesFragment) {
     fun setViewPagerAdapter(activity: FragmentActivity?) {
         activity?.let {
             layout.expenses_view_pager.adapter =
-                ViewPagerAdapter(
-                    it
-                )
+                ViewPagerAdapter(it)
         }
+    }
+
+    companion object {
+        var week: Double = 0.0
+        var month: Double = 0.0
+        var year: Double = 0.0
     }
 }

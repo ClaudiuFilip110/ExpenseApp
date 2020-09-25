@@ -29,6 +29,7 @@ class ExpensesFragment() : Fragment(), KoinComponent {
         savedInstanceState: Bundle?
     ): View? {
         val v = view.layout
+        presenter.dates()
         view.setViewPagerAdapter(activity)
         view.tabMediator()
         return v
@@ -38,6 +39,21 @@ class ExpensesFragment() : Fragment(), KoinComponent {
         fun newInstance(position: Int): Fragment {
             val fragment = ExpensesUIFragment()
             val args = Bundle()
+            args.putDouble("total", 0.0)
+            when (position) {
+                0 -> {
+                    args.putDouble("total", ExpensesView.week)
+                    args.putString("name", "week")
+                }
+                1 -> {
+                    args.putDouble("total", ExpensesView.month)
+                    args.putString("name", "month")
+                }
+                2 -> {
+                    args.putDouble("total", ExpensesView.year)
+                    args.putString("name", "year")
+                }
+            }
             fragment.arguments = args
             return fragment
         }

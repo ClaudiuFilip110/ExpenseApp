@@ -5,6 +5,9 @@ import com.example.android_resources.data.database.AppDatabase
 import com.example.android_resources.data.database.entities.Action
 import com.example.android_resources.data.database.entities.AutoLoginData
 import com.example.android_resources.data.database.entities.User
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 class UserRepository(private val db: AppDatabase) {
     //-------------------------------------------------------USER
@@ -72,4 +75,16 @@ class UserRepository(private val db: AppDatabase) {
     fun getLastId(): Int {
         return db.actionDao().getLastId()
     }
+
+    fun getBalanceUntilDate(date: Date): Int {
+        return db.actionDao().getBalanceUntilDate(date)
+    }
+
+//    fun getDates(): ArrayList<Date> {
+//        val dates = ArrayList<Date>()
+//        for(date in db.actionDao().getDates()) {
+//            dates.add(date)
+//        }
+//        return dates
+//    }
 }

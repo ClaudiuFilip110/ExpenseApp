@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android_resources.screens.action.ActionActivity
 import com.example.android_resources.screens.login.LoginActivity
+import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.android.ext.android.inject
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity(), KoinComponent {
         setSupportActionBar(toolbar)
         view.initDrawer(drawer_layout, toolbar)
         view.initFragment()
+        AndroidThreeTen.init(this)
     }
 
     override fun onResume() {

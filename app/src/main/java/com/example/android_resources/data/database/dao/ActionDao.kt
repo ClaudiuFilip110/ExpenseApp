@@ -6,6 +6,8 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.example.android_resources.data.database.entities.Action
 import com.example.android_resources.data.database.entities.User
+import java.time.LocalDateTime
+import java.util.*
 
 @Dao
 interface ActionDao {
@@ -28,4 +30,10 @@ interface ActionDao {
             "ORDER BY id DESC  \n" +
             "LIMIT 1;  ")
     fun getLastId(): Int
+
+    @Query("SELECT SUM(amount) FROM Actions WHERE date <= :date")
+    fun getBalanceUntilDate(date: Date): Int
+
+    @Query("SELECT date FROM Actions")
+    fun getDates(): List<Date>
 }

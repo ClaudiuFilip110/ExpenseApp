@@ -26,9 +26,9 @@ class ExpensesUIFragment() : Fragment(), KoinComponent {
         savedInstanceState: Bundle?
     ): View? {
         val v = view.layout
-        context?.let { presenter.recycler(v, it) }
-        val pieChart = PieChart()
-        pieChart.pieChart(v)
+        view.setTitle(arguments?.get("total"))
+        context?.let { presenter.setAdapter(arguments?.get("name"), v, it) }
+        presenter.chart(v, arguments?.get("name"))
         return v
     }
 }

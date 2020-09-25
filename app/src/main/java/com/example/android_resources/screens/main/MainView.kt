@@ -21,11 +21,9 @@ class MainView(private val activity: MainActivity) {
             MainActivity.start(activity)
             activity.finish()
         }
-
         layout.nav_item_converter.setOnClickListener {
             ConverterActivity.start(activity)
         }
-
         layout.nav_item_logout.setOnClickListener {
             activity.logout()
         }
@@ -69,11 +67,13 @@ class MainView(private val activity: MainActivity) {
             when (it.itemId) {
                 R.id.btm_nav_budget -> {
                     val budgetFragment = BudgetFragment()
+                    layout.toolbar_title.text = "My Budget"
                     activity.supportFragmentManager.beginTransaction()
                         .replace(R.id.main_fragment, budgetFragment).commit()
                 }
                 R.id.btm_nav_expenses -> {
                     val expensesFragment = ExpensesFragment()
+                    layout.toolbar_title.text = "My Expenses"
                     activity.supportFragmentManager.beginTransaction()
                         .replace(R.id.main_fragment, expensesFragment).commit()
                 }
