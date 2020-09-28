@@ -56,6 +56,9 @@ dependencies {
     //Logging
     implementation "com.jakewharton.timber:timber:4.7.1"
 
+    //Stetho
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
     //Room
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
