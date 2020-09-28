@@ -76,15 +76,11 @@ class UserRepository(private val db: AppDatabase) {
         return db.actionDao().getLastId()
     }
 
-    fun getBalanceUntilDate(date: Date): Int {
+    fun getBalanceUntilDate(date: Date): Double {
         return db.actionDao().getBalanceUntilDate(date)
     }
 
-//    fun getDates(): ArrayList<Date> {
-//        val dates = ArrayList<Date>()
-//        for(date in db.actionDao().getDates()) {
-//            dates.add(date)
-//        }
-//        return dates
-//    }
+    fun getTotal(): Int {
+        return db.actionDao().getTotal()
+    }
 }

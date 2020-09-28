@@ -24,6 +24,9 @@ class MainPresenter(private val mainView: MainView, private val userRepository: 
 //            for (user: User in users) {
 //                Log.d("user", user.toString())
 //            }
+
+//        val amount: Int = userRepository.getTotal()
+//        Log.d("AMOUNT","Total is $amount")
     }
 
     fun removeAutoLogin() {

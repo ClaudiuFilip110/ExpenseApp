@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.android_resources.R
 import com.example.android_resources.data.database.entities.Action
+import com.example.android_resources.utils.DateUtils
 import kotlinx.android.synthetic.main.recyclerview_expenses.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ExpensesAdapter(val context: Context, val mPayments: ArrayList<Action>) :
+class ExpensesAdapter(val context: Context, val mPayments: ArrayList<Action>, val mTotal: ArrayList<Double>) :
     RecyclerView.Adapter<ExpensesAdapter.ExpensesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpensesViewHolder {
         val v: View =
@@ -27,6 +30,7 @@ class ExpensesAdapter(val context: Context, val mPayments: ArrayList<Action>) :
 
     override fun onBindViewHolder(holder: ExpensesViewHolder, position: Int) {
         val currentPayment = mPayments[position]
+        val currentTotal = mTotal[position]
         //set image
         val image = currentPayment.category.toLowerCase()
         val drawableResourceId: Int =
@@ -37,6 +41,8 @@ class ExpensesAdapter(val context: Context, val mPayments: ArrayList<Action>) :
         //set text
         holder.amount.text = currentPayment.amount.toString()
         holder.category.text = currentPayment.category
+        holder.currentBalance.text = currentTotal.toString()
+        holder.date.text = DateUtils.convertSimpleDate(currentPayment.date).toString()
 //        if(holder.amount.toString().toDouble()<0){
 //            holder.type.text = "Expenses"
 //        } else {
@@ -49,5 +55,7 @@ class ExpensesAdapter(val context: Context, val mPayments: ArrayList<Action>) :
         val category: TextView = itemView.card_expenses_type
         val amount: TextView = itemView.card_expenses_amount
         val type: TextView = itemView.card_expenses_income_or_expense
+        val currentBalance: TextView = itemView.card_expenses_total
+        val date: TextView = itemView.card_expenses_day
     }
 }

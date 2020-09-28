@@ -31,9 +31,13 @@ class ExpensesUIPresenter(val expensesUIView: ExpensesUIView, val userRepository
         if (title == null)
             return
         var list = dates(title)
+        var amounts = ArrayList<Double>()
+        for (action in list) {
+            amounts.add(userRepository.getBalanceUntilDate(action.date))
+        }
         val recycler = v.expenses_recycler_view
         recycler.layoutManager = LinearLayoutManager(v.context)
-        recycler.adapter = ExpensesAdapter(context, list)
+        recycler.adapter = ExpensesAdapter(context, list, amounts)
     }
 
     fun dates(title: Any?): ArrayList<Action> {

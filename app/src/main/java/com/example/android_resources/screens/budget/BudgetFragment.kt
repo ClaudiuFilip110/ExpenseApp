@@ -38,7 +38,7 @@ class BudgetFragment : Fragment(), KoinComponent {
         return v
     }
 
-    fun getBalanceUntilDate(date: Date): Int {
+    fun getBalanceUntilDate(date: Date): Double {
         return presenter.getBalanceUntilDate(date)
     }
 }

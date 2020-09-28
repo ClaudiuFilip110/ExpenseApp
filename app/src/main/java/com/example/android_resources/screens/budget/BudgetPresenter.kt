@@ -12,7 +12,7 @@ import org.threeten.bp.LocalDateTime;
 import java.util.*
 
 class BudgetPresenter(val budgetView: BudgetView, val userRepository: UserRepository) {
-    fun getBalanceUntilDate(date: Date): Int {
+    fun getBalanceUntilDate(date: Date): Double {
         for (action in userRepository.getActions()) {
             Log.d("ACTION", action.toString())
         }

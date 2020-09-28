@@ -32,8 +32,11 @@ interface ActionDao {
     fun getLastId(): Int
 
     @Query("SELECT SUM(amount) FROM Actions WHERE date <= :date")
-    fun getBalanceUntilDate(date: Date): Int
+    fun getBalanceUntilDate(date: Date): Double
 
     @Query("SELECT date FROM Actions")
     fun getDates(): List<Date>
+
+    @Query("SELECT SUM(amount) from Actions")
+    fun getTotal(): Int
 }
