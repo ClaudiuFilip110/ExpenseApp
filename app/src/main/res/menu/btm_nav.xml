@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/btm_nav_budget"
+        android:icon="@drawable/budget_icon"
+        android:iconTint="#ffffff"
+        android:title="Budget" />
+
+    <item
+        android:id="@+id/btm_nav_expenses"
+        android:icon="@drawable/expenses_icon"
+        android:iconTint="#ffffff"
+        android:title="Expenses" />
+
+</menu>

@@ -1,6 +1,5 @@
 package com.example.android_resources.screens.register
 
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -14,51 +13,40 @@ class RegisterView(private val activity: RegisterActivity) {
     val layout: View = View.inflate(activity, R.layout.activity_register, null)
 
     init {
-        register()
+        initRegister()
     }
 
     fun backToLogin() {
         layout.register_login.setOnClickListener {
-            activity.finishRActivity()
+            activity.finishRegisterActivity()
         }
     }
 
-    fun register() {
+    fun initRegister() {
         layout.register_button.setOnClickListener {
-            if (validateName()) {
-                if (validateEmail()) {
-                    if (validatePassword()) {
-                        //send user to Activity
-                        var user = User()
-                        user.name = layout.register_name_text.text.toString()
-                        user.email = layout.register_email_text.text.toString()
-                        user.password = layout.register_password_text.text.toString()
-                        val encPassword = Crypto.encrypt(user.password)
-                        if (encPassword != null) {
-                            user.password = encPassword
-                        }
-                        activity.sendUser(user)
-                        //back to login
-                        activity.finishRActivity()
-                    } else {
-                        layout.register_password_text.requestFocus()
-                        layout.register_password_text.error =
-                            "Password must contain at least 1 number and must be at least 4 characters long"
-                        Toast.makeText(
-                            activity.baseContext,
-                            "Incorrect password",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                } else {
-                    layout.register_email_text.requestFocus()
-                    layout.register_email_text.error = "Incorrect email"
+            if (validateData()) {
+                //send user to Activity
+                var user = User()
+                user.name = layout.register_name_text.text.toString()
+                user.email = layout.register_email_text.text.toString()
+                user.password = layout.register_password_text.text.toString()
+                val encPassword = Crypto.encrypt(user.password)
+                if (encPassword != null) {
+                    user.password = encPassword
                 }
-            } else {
-                layout.register_name_text.requestFocus()
-                layout.register_name_text.error = "Incorrect name"
+                activity.sendUser(user)
+                //back to login
+                activity.finishRegisterActivity()
             }
+
         }
+    }
+
+    private fun validateData(): Boolean {
+        if (validateName() && validateEmail() && validatePassword()) {
+            return true
+        }
+        return false
     }
 
     private fun validateName(): Boolean {
@@ -69,8 +57,11 @@ class RegisterView(private val activity: RegisterActivity) {
             return false
         }
         val pattern = Pattern.compile(NAME_PATTERN)
-        if (!pattern.matcher(name).matches())
+        if (!pattern.matcher(name).matches()) {
+            layout.register_name_text.requestFocus()
+            layout.register_name_text.error = "Incorrect name"
             return false
+        }
         return true
     }
 
@@ -78,11 +69,28 @@ class RegisterView(private val activity: RegisterActivity) {
         var password: String? = layout.register_password_text.text.toString()
         val PASSWORD_PATTERN: String = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{4,}$";
         if (password.isNullOrBlank()) {
+            layout.register_password_text.requestFocus()
+            layout.register_password_text.error =
+                "Password must contain at least 1 number and must be at least 4 characters long"
+            Toast.makeText(
+                activity.baseContext,
+                "Incorrect password",
+                Toast.LENGTH_SHORT
+            ).show()
             return false
         }
         val pattern = Pattern.compile(PASSWORD_PATTERN)
-        if (!pattern.matcher(password).matches())
+        if (!pattern.matcher(password).matches()) {
+            layout.register_password_text.requestFocus()
+            layout.register_password_text.error =
+                "Password incorrect"
+            Toast.makeText(
+                activity.baseContext,
+                "Incorrect password",
+                Toast.LENGTH_SHORT
+            ).show()
             return false
+        }
         return true
     }
 
@@ -91,8 +99,11 @@ class RegisterView(private val activity: RegisterActivity) {
         if (email.isNullOrEmpty()) {
             return false
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            layout.register_email_text.requestFocus()
+            layout.register_email_text.error = "Incorrect email"
             return false
+        }
         return true
     }
 

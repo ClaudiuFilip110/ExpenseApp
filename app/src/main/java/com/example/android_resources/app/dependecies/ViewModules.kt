@@ -1,5 +1,15 @@
 package com.example.android_resources.app.dependecies
 
+import com.example.android_resources.screens.action.ActionActivity
+import com.example.android_resources.screens.action.ActionView
+import com.example.android_resources.screens.budget.BudgetFragment
+import com.example.android_resources.screens.budget.BudgetView
+import com.example.android_resources.screens.converter.ConverterActivity
+import com.example.android_resources.screens.converter.ConverterView
+import com.example.android_resources.screens.expenses.ExpensesFragment
+import com.example.android_resources.screens.expenses.expensesUI.ExpensesUIFragment
+import com.example.android_resources.screens.expenses.expensesUI.ExpensesUIView
+import com.example.android_resources.screens.expenses.ExpensesView
 import com.example.android_resources.screens.forgot.ForgotActivity
 import com.example.android_resources.screens.forgot.ForgotView
 import com.example.android_resources.screens.login.LoginActivity
@@ -18,4 +28,13 @@ val viewsModule: Module = module {
     factory { (activity: LoginActivity) -> LoginView(activity) }
     factory { (activity: RegisterActivity) -> RegisterView(activity) }
     factory { (activity: ForgotActivity) -> ForgotView(activity) }
+    factory { (activity: ConverterActivity) -> ConverterView(activity) }
+    factory { (activity: ActionActivity) -> ActionView(activity) }
+    factory { (activity: BudgetFragment) -> BudgetView(activity) }
+    factory { (activity: ExpensesUIFragment) ->
+        ExpensesUIView(
+            activity
+        )
+    }
+    factory { (activity: ExpensesFragment) -> ExpensesView(activity) }
 }
