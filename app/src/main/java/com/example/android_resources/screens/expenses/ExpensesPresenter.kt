@@ -11,6 +11,7 @@ class ExpensesPresenter(val expensesView: ExpensesView, val userRepository: User
         return userRepository.getActions()
     }
 
+    //TODO: split
     fun dates() {
         val actions = getActions()
         var week = 0.0

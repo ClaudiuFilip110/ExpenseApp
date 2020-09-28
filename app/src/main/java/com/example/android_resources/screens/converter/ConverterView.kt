@@ -52,6 +52,7 @@ class ConverterView(private val activity: ConverterActivity) {
             Log.d("text", "euro block is empty")
     }
 
+    //TODO: I think the time should be retrieved from presenter
     @RequiresApi(Build.VERSION_CODES.O)
     fun getRate(rate: String) {
         val euro = layout.converter_text_euro.text.toString()

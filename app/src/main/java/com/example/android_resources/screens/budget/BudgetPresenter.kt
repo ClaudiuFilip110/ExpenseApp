@@ -23,6 +23,7 @@ class BudgetPresenter(val budgetView: BudgetView, val userRepository: UserReposi
         return userRepository.getActions()
     }
 
+    //TODO: the function can be split to more sections
     fun dates() {
         val actions = getActions()
         var today = 0.0

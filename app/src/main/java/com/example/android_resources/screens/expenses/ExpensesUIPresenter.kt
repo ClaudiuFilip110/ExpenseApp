@@ -27,6 +27,7 @@ class ExpensesUIPresenter(val expensesUIView: ExpensesUIView, val userRepository
         pieChart.instantiate(v)
     }
 
+    //TODO: move recycler to the view class
     fun setAdapter(title: Any?, v: View, context: Context) {
         if (title == null)
             return
@@ -40,6 +41,7 @@ class ExpensesUIPresenter(val expensesUIView: ExpensesUIView, val userRepository
         recycler.adapter = ExpensesAdapter(context, list, amounts)
     }
 
+    //TODO: split
     fun dates(title: Any?): ArrayList<Action> {
         val finalArray = ArrayList<Action>()
         if (title == null)

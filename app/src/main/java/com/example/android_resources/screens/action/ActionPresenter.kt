@@ -15,7 +15,10 @@ class ActionPresenter(
     private val actionView: ActionView,
     private val userRepository: UserRepository
 ) {
+
+    //TODO: create a function that returns all the action data
     fun getRecycler(recycler: RecyclerView, actionActivity: ActionActivity) {
+        //TODO: should be in view class
         recycler.layoutManager =
             GridLayoutManager(actionActivity, 2, GridLayoutManager.HORIZONTAL, false)
         val list = ArrayList<Action>()

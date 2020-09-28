@@ -23,6 +23,7 @@ class RegisterView(private val activity: RegisterActivity) {
         }
     }
 
+    //TODO: refactor validate functions
     fun register() {
         layout.register_button.setOnClickListener {
             if (validateName()) {

@@ -32,27 +32,32 @@ class ActionView(private val activity: ActionActivity) {
 
     fun getRecycler() {
         val recycler = layout.action_recycler_view
+        //TODO: here the adapter should be set the adapter of the recycler with the data retrieved from the presenter
         activity.getRecycler(recycler)
     }
 
+    //TODO: goBack should be renamed to something like: initializeBackClickListener()
     fun goBack() {
         layout.toolbar_back_image.setOnClickListener {
             activity.goBack()
         }
     }
 
+    //TODO: addImage should be renamed to something like: initializeAddImageClickListener()
     fun addImage() {
         layout.action_add_image.setOnClickListener {
             activity.pickImage()
         }
     }
 
+    //TODO: same here
     fun save() {
         layout.toolbar_save.setOnClickListener {
 //            activity.deleteActions()
 //            activity.viewActions()
             val lastId = activity.getLastId() + 1
             Toast.makeText(activity.baseContext, "SAVE", Toast.LENGTH_SHORT).show()
+            //TODO: you can create a function that verify all the validations
             if (validateDate()) {
                 if (validateAmount()) {
                     if (validateCategory()) {
@@ -149,6 +154,7 @@ class ActionView(private val activity: ActionActivity) {
         return true
     }
 
+    //TODO: this can be rethink to add the message on the false return
     private fun validateDate(): Boolean {
         if (layout.action_date_text.text.isNullOrEmpty()) {
             return false

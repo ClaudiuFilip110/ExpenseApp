@@ -35,6 +35,7 @@ class ExpensesFragment() : Fragment(), KoinComponent {
         return v
     }
 
+    //TODO: you can put the keys to some constant fields
     companion object {
         fun newInstance(position: Int): Fragment {
             val fragment = ExpensesUIFragment()

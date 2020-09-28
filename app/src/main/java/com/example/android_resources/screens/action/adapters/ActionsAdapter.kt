@@ -53,11 +53,17 @@ class ActionsAdapter(var context: Context, var mActions: ArrayList<Action>) :
             holder.card.setBackgroundResource(R.drawable.card_edge)
             ActionView.category = currentAction.category
         }
+        holder.bind()
     }
 
     class ActionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.action_rec_img
         val text: TextView = itemView.action_rec_text
         val card: ConstraintLayout = itemView.action_card
+
+        //TODO: you can put all the view fields updates here
+        fun bind(){
+
+        }
     }
 }
