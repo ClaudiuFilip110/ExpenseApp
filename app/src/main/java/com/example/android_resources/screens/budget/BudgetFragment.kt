@@ -32,9 +32,9 @@ class BudgetFragment : Fragment(), KoinComponent {
     ): View? {
         // Inflate the layout for this fragment
         val v = view.layout
-        view.clickOnCard(v)
-        presenter.dates()
-        presenter.chart(v, resources)
+        view.setClickListeners(v)
+        presenter.setTitles()
+        presenter.setChart(v, resources)
         return v
     }
 

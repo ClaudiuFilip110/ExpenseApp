@@ -32,25 +32,23 @@
             app:layout_constraintTop_toBottomOf="@id/action_toolbar"
             app:layout_constraintVertical_bias="0.03" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/action_date_layout"
+        <CalendarView
+            android:id="@+id/action_calendar"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="25dp"
-            android:theme="@style/TextLabel"
-            android:hint="28-02-1998 13:00"
+            android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="@id/action_date_title"
             app:layout_constraintRight_toRightOf="@id/action_date_title"
-            app:layout_constraintTop_toBottomOf="@id/action_date_title">
+            app:layout_constraintTop_toBottomOf="@id/action_date_title"
+            android:theme="@style/CalenderViewCustom"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/action_date_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="datetime" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <TimePicker
+            android:id="@+id/action_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/CalenderViewCustom"
+            app:layout_constraintLeft_toLeftOf="@id/action_calendar"
+            app:layout_constraintRight_toRightOf="@id/action_calendar"
+            app:layout_constraintTop_toBottomOf="@id/action_calendar"/>
 
         <TextView
             android:id="@+id/action_amount_title"
@@ -59,10 +57,11 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/roboto_regular"
             android:text="Amount"
+            android:layout_marginLeft="10dp"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="@id/action_date_layout"
-            app:layout_constraintTop_toBottomOf="@id/action_date_layout" />
+            app:layout_constraintLeft_toLeftOf="@id/action_time"
+            app:layout_constraintTop_toBottomOf="@id/action_time" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/action_amount_layout"

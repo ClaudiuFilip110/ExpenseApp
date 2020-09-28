@@ -7,6 +7,8 @@ import com.example.android_resources.screens.budget.BudgetView
 import com.example.android_resources.screens.converter.ConverterPresenter
 import com.example.android_resources.screens.converter.ConverterView
 import com.example.android_resources.screens.expenses.*
+import com.example.android_resources.screens.expenses.expensesUI.ExpensesUIPresenter
+import com.example.android_resources.screens.expenses.expensesUI.ExpensesUIView
 import com.example.android_resources.screens.forgot.ForgotPresenter
 import com.example.android_resources.screens.forgot.ForgotView
 import com.example.android_resources.screens.login.LoginPresenter
@@ -28,6 +30,11 @@ val presentersModules: Module = module {
     factory { (view: ConverterView) -> ConverterPresenter(view, get()) }
     factory { (view: ActionView) -> ActionPresenter(view, get()) }
     factory { (view: BudgetView) -> BudgetPresenter(view, get()) }
-    factory { (view: ExpensesUIView) -> ExpensesUIPresenter(view, get()) }
+    factory { (view: ExpensesUIView) ->
+        ExpensesUIPresenter(
+            view,
+            get()
+        )
+    }
     factory { (view: ExpensesView) -> ExpensesPresenter(view, get()) }
 }

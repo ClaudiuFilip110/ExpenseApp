@@ -19,17 +19,17 @@ class ConverterView(private val activity: ConverterActivity) {
     val layout: View = View.inflate(activity, R.layout.activity_converter, null)
 
     init {
-        set_clicks()
-        goBack()
+        initConverterFocusListener()
+        initBackListener()
     }
 
-    fun goBack() {
+    private fun initBackListener() {
         layout.toolbar_back_image.setOnClickListener {
             activity.goBack()
         }
     }
 
-    fun set_clicks() {
+    private fun initConverterFocusListener() {
         layout.converter_text_euro.onFocusChangeListener = OnFocusChangeListener { _, _ ->
             run {
                 layout.converter_text_euro_layout.hint = ""
@@ -45,27 +45,22 @@ class ConverterView(private val activity: ConverterActivity) {
         }
     }
 
-    fun sendToAct() {
+    private fun sendToAct() {
         if (!layout.converter_text_euro.text.isNullOrEmpty())
             activity.receiveFromView("EUR", "RON", layout.converter_text_euro.text.toString())
         else
             Log.d("text", "euro block is empty")
     }
 
-    //TODO: I think the time should be retrieved from presenter
     @RequiresApi(Build.VERSION_CODES.O)
     fun getRate(rate: String) {
         val euro = layout.converter_text_euro.text.toString()
-        Log.d("Response", "euro is $euro")
         val euroD = euro.toDouble()
-        Log.d("Response", "rate is $rate")
         val rateD = rate.toDouble()
         val result = euroD * rateD
         layout.converter_text_lei.setText(result.toString())
         layout.converter_text_lei_layout.hint = ""
-        val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-        val formatted = current.format(formatter)
-        layout.converter_title.text = "Converted using an API at $formatted"
+        val formattedTime = activity.receiveFormattedText()
+        layout.converter_title.text = "Converted using an API at $formattedTime"
     }
 }

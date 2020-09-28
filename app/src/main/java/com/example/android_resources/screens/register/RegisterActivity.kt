@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity(), KoinComponent {
         presenter.sendUser(user)
     }
 
-    fun finishRActivity() {
+    fun finishRegisterActivity() {
         LoginActivity.start(this)
         finish()
     }

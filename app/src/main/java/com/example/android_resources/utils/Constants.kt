@@ -9,6 +9,10 @@ object Constants {
     const val MAX_X_VALUE = 12
     const val MAX_Y_VALUE = 100
     const val MIN_Y_VALUE = -40
+    const val week = "week"
+    const val month = "month"
+    const val year = "year"
+    const val today = "today"
     val MONTHS =
         arrayOf(
             "Jan",

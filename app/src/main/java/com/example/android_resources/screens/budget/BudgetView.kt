@@ -13,7 +13,7 @@ import java.util.*
 class BudgetView(private val fragment: BudgetFragment){
     val layout: View = View.inflate(fragment.context, R.layout.fragment_budget, null)
 
-    fun clickOnCard(v: View) {
+    fun setClickListeners(v: View) {
         v.budget_cur_bal_card.setOnClickListener {
             Toast.makeText(fragment.context, "TEXT", Toast.LENGTH_SHORT).show()
         }

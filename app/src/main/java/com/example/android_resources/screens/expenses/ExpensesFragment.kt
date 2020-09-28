@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.android_resources.R
-import com.example.android_resources.data.database.repositories.UserRepository
-import com.example.android_resources.screens.expenses.adapters.ViewPagerAdapter
-import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_expenses.view.*
+import com.example.android_resources.screens.expenses.expensesUI.ExpensesUIFragment
+import com.example.android_resources.utils.Constants
 import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 import org.koin.core.context.GlobalContext
@@ -35,24 +32,24 @@ class ExpensesFragment() : Fragment(), KoinComponent {
         return v
     }
 
-    //TODO: you can put the keys to some constant fields
     companion object {
         fun newInstance(position: Int): Fragment {
-            val fragment = ExpensesUIFragment()
+            val fragment =
+                ExpensesUIFragment()
             val args = Bundle()
             args.putDouble("total", 0.0)
             when (position) {
                 0 -> {
                     args.putDouble("total", ExpensesView.week)
-                    args.putString("name", "week")
+                    args.putString("name", Constants.week)
                 }
                 1 -> {
                     args.putDouble("total", ExpensesView.month)
-                    args.putString("name", "month")
+                    args.putString("name", Constants.month)
                 }
                 2 -> {
                     args.putDouble("total", ExpensesView.year)
-                    args.putString("name", "year")
+                    args.putString("name", Constants.year)
                 }
             }
             fragment.arguments = args

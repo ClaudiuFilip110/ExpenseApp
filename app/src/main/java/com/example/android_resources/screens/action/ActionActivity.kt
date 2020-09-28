@@ -29,8 +29,8 @@ class ActionActivity : AppCompatActivity(), KoinComponent {
         view.getRecycler()
     }
 
-    fun getRecycler(recycler: RecyclerView) {
-        presenter.getRecycler(recycler, this)
+    fun passRecyclerData():ArrayList<Action> {
+        return presenter.passRecyclerData()
     }
 
     fun goBack() {
@@ -52,14 +52,6 @@ class ActionActivity : AppCompatActivity(), KoinComponent {
 
     fun addToDB(action: Action) {
         presenter.addToDB(action)
-    }
-
-    fun viewActions() {
-        presenter.viewActions()
-    }
-
-    fun deleteActions() {
-        presenter.deleteActions()
     }
 
     fun finishAct() {

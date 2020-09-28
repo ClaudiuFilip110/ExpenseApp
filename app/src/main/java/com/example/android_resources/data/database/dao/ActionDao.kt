@@ -11,7 +11,7 @@ import java.util.*
 
 @Dao
 interface ActionDao {
-    @Query("SELECT * FROM Actions")
+    @Query("SELECT * FROM Actions ORDER BY date DESC")
     fun getAll(): List<Action>
 
     @Query("SELECT * FROM actions WHERE category LIKE :category")
@@ -31,10 +31,10 @@ interface ActionDao {
             "LIMIT 1;  ")
     fun getLastId(): Int
 
-    @Query("SELECT SUM(amount) FROM Actions WHERE date <= :date")
+    @Query("SELECT SUM(amount) FROM Actions WHERE date <= :date ORDER BY date DESC")
     fun getBalanceUntilDate(date: Date): Double
 
-    @Query("SELECT date FROM Actions")
+    @Query("SELECT date FROM Actions ORDER BY date DESC")
     fun getDates(): List<Date>
 
     @Query("SELECT SUM(amount) from Actions")

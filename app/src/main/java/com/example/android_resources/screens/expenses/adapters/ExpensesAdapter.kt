@@ -1,6 +1,8 @@
 package com.example.android_resources.screens.expenses.adapters
 
 import android.content.Context
+import android.content.res.Resources
+import android.os.Build
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +18,12 @@ import kotlinx.android.synthetic.main.recyclerview_expenses.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ExpensesAdapter(val context: Context, val mPayments: ArrayList<Action>, val mTotal: ArrayList<Double>) :
+class ExpensesAdapter(
+    val context: Context,
+    val mPayments: ArrayList<Action>,
+    val mTotal: ArrayList<Double>,
+    val resources: Resources = Resources.getSystem()
+) :
     RecyclerView.Adapter<ExpensesAdapter.ExpensesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpensesViewHolder {
         val v: View =
@@ -32,22 +39,8 @@ class ExpensesAdapter(val context: Context, val mPayments: ArrayList<Action>, va
         val currentPayment = mPayments[position]
         val currentTotal = mTotal[position]
         //set image
-        val image = currentPayment.category.toLowerCase()
-        val drawableResourceId: Int =
-            context.resources.getIdentifier(image, "drawable", context.packageName)
-        Glide.with(holder.itemView)
-            .load(drawableResourceId)
-            .into(holder.image)
-        //set text
-        holder.amount.text = currentPayment.amount.toString()
-        holder.category.text = currentPayment.category
-        holder.currentBalance.text = currentTotal.toString()
-        holder.date.text = DateUtils.convertSimpleDate(currentPayment.date).toString()
-//        if(holder.amount.toString().toDouble()<0){
-//            holder.type.text = "Expenses"
-//        } else {
-//            holder.type.text = "Income"
-//        }
+        holder.bind(context, currentPayment, currentTotal, resources)
+
     }
 
     class ExpensesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -57,5 +50,32 @@ class ExpensesAdapter(val context: Context, val mPayments: ArrayList<Action>, va
         val type: TextView = itemView.card_expenses_income_or_expense
         val currentBalance: TextView = itemView.card_expenses_total
         val date: TextView = itemView.card_expenses_day
+
+        fun bind(context: Context, currentPayment: Action,currentTotal: Double, resources: Resources) {
+            val curImage = currentPayment.category.toLowerCase()
+            val drawableResourceId: Int =
+                context.resources.getIdentifier(curImage, "drawable", context.packageName)
+            Glide.with(itemView)
+                .load(drawableResourceId)
+                .into(image)
+            //set text
+            amount.text = currentPayment.amount.toString()
+            category.text = currentPayment.category
+            currentBalance.text = currentTotal.toString()
+            date.text = DateUtils.convertSimpleDate(currentPayment.date).toString()
+            type.text = if (category.text == "Income") {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    amount.setTextColor(resources.getColor(R.color.green, null))
+                    type.setTextColor(resources.getColor(R.color.green, null))
+                }
+                "Income"
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    amount.setTextColor(resources.getColor(R.color.red, null))
+                    type.setTextColor(resources.getColor(R.color.red, null))
+                }
+                "Expense"
+            }
+        }
     }
 }

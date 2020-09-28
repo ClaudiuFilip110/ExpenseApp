@@ -13,10 +13,10 @@ class ForgotView(private val activity: ForgotActivity) {
     val layout: View = View.inflate(activity, R.layout.activity_forgot, null)
 
     init {
-        start_reset()
+        initPassReset()
     }
 
-    fun start_reset() {
+    private fun initPassReset() {
         layout.forgot_button.setOnClickListener {
             if (validateEmail()) {
                 var user = User()

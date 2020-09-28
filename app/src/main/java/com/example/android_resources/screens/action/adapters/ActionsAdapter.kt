@@ -33,27 +33,7 @@ class ActionsAdapter(var context: Context, var mActions: ArrayList<Action>) :
     }
 
     override fun onBindViewHolder(holder: ActionsViewHolder, position: Int) {
-        val currentAction = mActions[position]
-        cardViewList.add(holder.card)
-        //set image
-        val image = currentAction.category.toLowerCase()
-        val drawableResourceId: Int =
-            context.resources.getIdentifier(image, "drawable", context.packageName)
-        Glide.with(holder.itemView)
-            .load(drawableResourceId)
-            .into(holder.image)
-        //set text
-        holder.text.text = currentAction.category
-        //click
-        holder.card.setOnClickListener {
-            for (cardView in cardViewList) {
-                cardView.setBackgroundResource(R.drawable.card_edge_selected)
-            }
-            //set category
-            holder.card.setBackgroundResource(R.drawable.card_edge)
-            ActionView.category = currentAction.category
-        }
-        holder.bind()
+        holder.bind(context, mActions, cardViewList, position)
     }
 
     class ActionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -61,9 +41,27 @@ class ActionsAdapter(var context: Context, var mActions: ArrayList<Action>) :
         val text: TextView = itemView.action_rec_text
         val card: ConstraintLayout = itemView.action_card
 
-        //TODO: you can put all the view fields updates here
-        fun bind(){
-
+        fun bind(context: Context, mActions: ArrayList<Action>, cardViewList: ArrayList<ConstraintLayout>, position: Int){
+            val currentAction = mActions[position]
+            cardViewList.add(card)
+            //set image
+            val imageRes = currentAction.category.toLowerCase()
+            val drawableResourceId: Int =
+                context.resources.getIdentifier(imageRes, "drawable", context.packageName)
+            Glide.with(itemView)
+                .load(drawableResourceId)
+                .into(image)
+            //set text
+            text.text = currentAction.category
+            //click
+            card.setOnClickListener {
+                for (cardView in cardViewList) {
+                    cardView.setBackgroundResource(R.drawable.card_edge_selected)
+                }
+                //set category
+                card.setBackgroundResource(R.drawable.card_edge)
+                ActionView.category = currentAction.category
+            }
         }
     }
 }

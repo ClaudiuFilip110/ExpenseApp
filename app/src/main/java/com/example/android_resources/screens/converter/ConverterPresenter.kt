@@ -6,6 +6,8 @@ import androidx.annotation.RequiresApi
 import com.example.android_resources.data.api.api.ApiClient
 import com.example.android_resources.data.api.models.Request
 import com.example.android_resources.data.database.repositories.UserRepository
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,5 +38,11 @@ class ConverterPresenter(
                     Log.d("Response", "response did not fail but is null")
             }
         })
+    }
+
+    fun sendFormattedDate(): String {
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+        return current.format(formatter)
     }
 }

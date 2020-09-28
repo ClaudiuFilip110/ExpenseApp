@@ -7,8 +7,8 @@ import com.example.android_resources.screens.budget.BudgetView
 import com.example.android_resources.screens.converter.ConverterActivity
 import com.example.android_resources.screens.converter.ConverterView
 import com.example.android_resources.screens.expenses.ExpensesFragment
-import com.example.android_resources.screens.expenses.ExpensesUIFragment
-import com.example.android_resources.screens.expenses.ExpensesUIView
+import com.example.android_resources.screens.expenses.expensesUI.ExpensesUIFragment
+import com.example.android_resources.screens.expenses.expensesUI.ExpensesUIView
 import com.example.android_resources.screens.expenses.ExpensesView
 import com.example.android_resources.screens.forgot.ForgotActivity
 import com.example.android_resources.screens.forgot.ForgotView
@@ -31,6 +31,10 @@ val viewsModule: Module = module {
     factory { (activity: ConverterActivity) -> ConverterView(activity) }
     factory { (activity: ActionActivity) -> ActionView(activity) }
     factory { (activity: BudgetFragment) -> BudgetView(activity) }
-    factory { (activity: ExpensesUIFragment) -> ExpensesUIView(activity) }
+    factory { (activity: ExpensesUIFragment) ->
+        ExpensesUIView(
+            activity
+        )
+    }
     factory { (activity: ExpensesFragment) -> ExpensesView(activity) }
 }

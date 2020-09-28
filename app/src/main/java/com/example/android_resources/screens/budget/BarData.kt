@@ -30,7 +30,7 @@ class BarData(val actions: ArrayList<Action>) {
     private fun getAmountPerMonth(month: Int): Float {
         var amount = 0.0f
         for (action in actions) {
-            var date = DateUtils.convertDate(action.date)
+            val date = DateUtils.convertDate(action.date)
             if (date.month.toString() == Constants.FullMONTHS[month].toUpperCase()) {
                 amount += action.amount.toFloat()
             }

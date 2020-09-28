@@ -15,10 +15,6 @@ class RegisterPresenter(private val registerView: RegisterView, val userReposito
     fun sendUser(userInput: User) {
         user = userInput
         addToDb()
-        Log.d("user", "---list of all users")
-        for (user: User in userRepository.getUsers()) {
-            Log.d("user", user.toString())
-        }
     }
 
     fun addToDb() {

@@ -1,8 +1,6 @@
 package com.example.android_resources.screens.main
 
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
@@ -32,10 +30,10 @@ class MainView(private val activity: MainActivity) {
     init {
         clickOnDrawerItem()
         initBtmNav()
-        clickOnPlus()
+        initPlus()
     }
 
-    fun clickOnPlus() {
+    private fun initPlus() {
         layout.toolbar_plus.setOnClickListener {
             activity.startAction()
         }
@@ -66,12 +64,16 @@ class MainView(private val activity: MainActivity) {
         layout.main_btmNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.btm_nav_budget -> {
+                    layout.main_btmNav.menu.findItem(it.itemId).isChecked = true
+                    layout.main_btmNav.menu.findItem(R.id.btm_nav_expenses).isChecked = false
                     val budgetFragment = BudgetFragment()
                     layout.toolbar_title.text = "My Budget"
                     activity.supportFragmentManager.beginTransaction()
                         .replace(R.id.main_fragment, budgetFragment).commit()
                 }
                 R.id.btm_nav_expenses -> {
+                    layout.main_btmNav.menu.findItem(it.itemId).isChecked = false
+                    layout.main_btmNav.menu.findItem(R.id.btm_nav_budget).isChecked = false
                     val expensesFragment = ExpensesFragment()
                     layout.toolbar_title.text = "My Expenses"
                     activity.supportFragmentManager.beginTransaction()

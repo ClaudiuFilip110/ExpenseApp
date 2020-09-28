@@ -16,11 +16,7 @@ class ActionPresenter(
     private val userRepository: UserRepository
 ) {
 
-    //TODO: create a function that returns all the action data
-    fun getRecycler(recycler: RecyclerView, actionActivity: ActionActivity) {
-        //TODO: should be in view class
-        recycler.layoutManager =
-            GridLayoutManager(actionActivity, 2, GridLayoutManager.HORIZONTAL, false)
+    fun passRecyclerData(): ArrayList<Action> {
         val list = ArrayList<Action>()
         var action = Action()
         action.category = "Income"
@@ -46,23 +42,11 @@ class ActionPresenter(
         action = Action()
         action.category = "Travel"
         list.add(action)
-        recycler.adapter = ActionsAdapter(actionView.passContext(), list)
+        return list
     }
 
     fun addToDB(action: Action) {
         userRepository.insertAction(action)
-    }
-
-    fun viewActions() {
-        val actions: ArrayList<Action> = userRepository.getActions()
-        if (actions.size == 0) {
-            Log.d("ACTIONS", "no actions in the db")
-        } else {
-            Log.d("ACTIONS", "ACTIONS----------")
-            for (action: Action in userRepository.getActions()) {
-                Log.d("ACTIONS", action.toString())
-            }
-        }
     }
 
     fun deleteActions() {
