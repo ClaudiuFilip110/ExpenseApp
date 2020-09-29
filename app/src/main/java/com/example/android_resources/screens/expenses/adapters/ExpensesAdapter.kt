@@ -1,6 +1,8 @@
 package com.example.android_resources.screens.expenses.adapters
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import android.util.Base64
@@ -9,12 +11,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.android_resources.R
 import com.example.android_resources.data.database.entities.Action
+import com.example.android_resources.screens.action.ActionActivity
+import com.example.android_resources.screens.main.MainActivity
 import com.example.android_resources.utils.DateUtils
 import kotlinx.android.synthetic.main.recyclerview_expenses.view.*
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,9 +45,10 @@ class ExpensesAdapter(
     override fun onBindViewHolder(holder: ExpensesViewHolder, position: Int) {
         val currentPayment = mPayments[position]
         val currentTotal = mTotal[position]
-        //set image
         holder.bind(context, currentPayment, currentTotal, resources)
-
+        //set image
+//        val intent = Intent(context,MainActivity::class.java)
+//        context.startActivity(intent)
     }
 
     class ExpensesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,8 +58,14 @@ class ExpensesAdapter(
         val type: TextView = itemView.card_expenses_income_or_expense
         val currentBalance: TextView = itemView.card_expenses_total
         val date: TextView = itemView.card_expenses_day
+        val cardView: CardView = itemView.card_expenses_card
 
-        fun bind(context: Context, currentPayment: Action,currentTotal: Double, resources: Resources) {
+        fun bind(
+            context: Context,
+            currentPayment: Action,
+            currentTotal: Double,
+            resources: Resources
+        ) {
             val curImage = currentPayment.category.toLowerCase()
             val drawableResourceId: Int =
                 context.resources.getIdentifier(curImage, "drawable", context.packageName)
@@ -75,6 +89,11 @@ class ExpensesAdapter(
                     type.setTextColor(resources.getColor(R.color.red, null))
                 }
                 "Expense"
+            }
+            cardView.setOnClickListener {
+                val intent = Intent(context as Activity, ActionActivity::class.java)
+                intent.putExtra("object", currentPayment)
+                context.startActivity(intent)
             }
         }
     }

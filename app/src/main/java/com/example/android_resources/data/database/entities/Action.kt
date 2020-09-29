@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.android_resources.data.database.type_converters.DateConverter
+import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "Actions")
@@ -16,4 +17,4 @@ data class Action(
     var category: String = "",
     var details: String = "",
     var detailsImage: String = ""
-)
+) : Serializable

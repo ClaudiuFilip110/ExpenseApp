@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -27,9 +28,16 @@ class ActionActivity : AppCompatActivity(), KoinComponent {
         super.onCreate(savedInstanceState)
         setContentView(view.layout)
         view.getRecycler()
+        isObjectPassed()
     }
 
-    fun passRecyclerData():ArrayList<Action> {
+    private fun isObjectPassed() {
+        if (intent.getSerializableExtra("object") == null) return
+        val action = intent.getSerializableExtra("object")
+        view.populateWithActivity(action)
+    }
+
+    fun passRecyclerData(): ArrayList<Action> {
         return presenter.passRecyclerData()
     }
 
@@ -65,7 +73,7 @@ class ActionActivity : AppCompatActivity(), KoinComponent {
     }
 
     companion object {
-        fun start(activity: AppCompatActivity) {
+        fun start(activity: Activity) {
             val intent = Intent(activity, ActionActivity::class.java)
             activity.startActivity(intent)
         }

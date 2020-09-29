@@ -1,6 +1,7 @@
 package com.example.android_resources.screens.action
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -13,13 +14,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.android_resources.R
 import com.example.android_resources.data.database.entities.Action
 import com.example.android_resources.screens.action.adapters.ActionsAdapter
+import com.example.android_resources.utils.DateUtils
 import kotlinx.android.synthetic.main.activity_action.view.*
 import kotlinx.android.synthetic.main.toolbar_back_arrow.view.*
-import org.threeten.bp.LocalDateTime
 import java.io.File
 import java.io.FileOutputStream
+import java.io.Serializable
 import java.text.SimpleDateFormat
-import java.time.ZoneId
 import java.util.*
 
 
@@ -62,8 +63,7 @@ class ActionView(private val activity: ActionActivity) {
         val calendar = Calendar.getInstance()
         layout.action_calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
             calendar.set(year, month, dayOfMonth)
-            val date =
-                com.example.android_resources.utils.DateUtils.convertSimpleDate(calendar.time)
+            val date = DateUtils.convertSimpleDate(calendar.time)
             calendarDate = date.toString()
         }
     }
@@ -127,7 +127,7 @@ class ActionView(private val activity: ActionActivity) {
         }
     }
 
-    fun deletePhoto() {
+    private fun deletePhoto() {
         layout.action_delete_pdf.setOnClickListener {
             if (layout.action_details_pdf.drawable != null)
                 layout.action_details_pdf.setImageDrawable(null);
@@ -175,6 +175,45 @@ class ActionView(private val activity: ActionActivity) {
             return false
         }
         return true
+    }
+
+    fun populateWithActivity(action: Serializable?) {
+        if (action == null)
+            return
+        action as Action
+        val localdatetime = DateUtils.convertDate(action.date)
+        val calendar = Calendar.getInstance()
+        calendar.set(localdatetime.year, localdatetime.monthValue, localdatetime.dayOfMonth)
+        val long = calendar.timeInMillis
+        layout.action_calendar.date = long
+
+        layout.action_amount_text.setText(action.amount.toString())
+        var categoryList = activity.passRecyclerData()
+
+        //initiate recycler
+        val recycler = layout.action_recycler_view
+        val list = activity.passRecyclerData()
+        recycler.layoutManager =
+            GridLayoutManager(activity, 2, GridLayoutManager.HORIZONTAL, false)
+        recycler.adapter = ActionsAdapter(activity.baseContext, list, true, action.category)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            layout.action_time.hour = localdatetime.hour
+            layout.action_time.minute = localdatetime.minute
+        }
+
+        layout.action_details_text.setText(action.details)
+        if (action.detailsImage.isNotEmpty()) {
+            val path = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                File(activity.dataDir, "files" + File.separator + "Images")
+            } else {
+                File("")
+            }
+            val imageView = layout.action_details_pdf
+            val outFile = File(path, action.id.toString() + "_pdf" + ".jpeg")
+            val myBitmap = BitmapFactory.decodeFile(outFile.absolutePath)
+            imageView.setImageBitmap(myBitmap)
+        }
     }
 
     companion object {

@@ -16,7 +16,12 @@ import com.example.android_resources.screens.action.ActionView
 import kotlinx.android.synthetic.main.recyclerview_action.view.*
 
 
-class ActionsAdapter(var context: Context, var mActions: ArrayList<Action>) :
+class ActionsAdapter(
+    var context: Context,
+    var mActions: ArrayList<Action>,
+    var selected: Boolean = false,
+    var selectedCategory: String = ""
+) :
     RecyclerView.Adapter<ActionsAdapter.ActionsViewHolder>() {
     var cardViewList: ArrayList<ConstraintLayout> = ArrayList()
     override fun onCreateViewHolder(
@@ -33,7 +38,7 @@ class ActionsAdapter(var context: Context, var mActions: ArrayList<Action>) :
     }
 
     override fun onBindViewHolder(holder: ActionsViewHolder, position: Int) {
-        holder.bind(context, mActions, cardViewList, position)
+        holder.bind(context, mActions, cardViewList, position, selected, selectedCategory)
     }
 
     class ActionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -41,7 +46,14 @@ class ActionsAdapter(var context: Context, var mActions: ArrayList<Action>) :
         val text: TextView = itemView.action_rec_text
         val card: ConstraintLayout = itemView.action_card
 
-        fun bind(context: Context, mActions: ArrayList<Action>, cardViewList: ArrayList<ConstraintLayout>, position: Int){
+        fun bind(
+            context: Context,
+            mActions: ArrayList<Action>,
+            cardViewList: ArrayList<ConstraintLayout>,
+            position: Int,
+            selected: Boolean,
+            selectedCategory: String
+        ) {
             val currentAction = mActions[position]
             cardViewList.add(card)
             //set image
@@ -61,6 +73,9 @@ class ActionsAdapter(var context: Context, var mActions: ArrayList<Action>) :
                 //set category
                 card.setBackgroundResource(R.drawable.card_edge)
                 ActionView.category = currentAction.category
+            }
+            if (selected && selectedCategory == text.text) {
+                card.setBackgroundResource(R.drawable.card_edge)
             }
         }
     }

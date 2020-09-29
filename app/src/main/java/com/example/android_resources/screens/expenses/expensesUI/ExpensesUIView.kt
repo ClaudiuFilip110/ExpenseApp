@@ -1,13 +1,16 @@
 package com.example.android_resources.screens.expenses.expensesUI
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.view.View
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_resources.R
 import com.example.android_resources.data.database.entities.Action
 import com.example.android_resources.screens.expenses.adapters.ExpensesAdapter
 import com.example.android_resources.screens.expenses.expensesUI.ExpensesUIFragment
+import com.example.android_resources.screens.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_expenses_adapter.view.*
 
 class ExpensesUIView(private val fragment: ExpensesUIFragment) {
@@ -19,7 +22,12 @@ class ExpensesUIView(private val fragment: ExpensesUIFragment) {
         layout.expenses_total_nr.text = title.toString()
     }
 
-    fun setAdapter(title: Any?, list: ArrayList<Action>, balance: ArrayList<Double>, resources: Resources) {
+    fun setAdapter(
+        title: Any?,
+        list: ArrayList<Action>,
+        balance: ArrayList<Double>,
+        resources: Resources
+    ) {
         if (title == null)
             return
         val recycler = layout.expenses_recycler_view

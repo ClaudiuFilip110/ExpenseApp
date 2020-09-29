@@ -1,5 +1,6 @@
 package com.example.android_resources.screens.main
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity(), KoinComponent {
     }
 
     companion object {
-        fun start(activity: AppCompatActivity) {
+        fun start(activity: Activity) {
             val intent = Intent(activity, MainActivity::class.java)
             activity.startActivity(intent)
         }
