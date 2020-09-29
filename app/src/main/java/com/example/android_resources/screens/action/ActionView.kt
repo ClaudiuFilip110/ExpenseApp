@@ -6,8 +6,10 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.text.Editable
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +19,7 @@ import com.example.android_resources.screens.action.adapters.ActionsAdapter
 import com.example.android_resources.utils.DateUtils
 import kotlinx.android.synthetic.main.activity_action.view.*
 import kotlinx.android.synthetic.main.toolbar_back_arrow.view.*
+import org.threeten.bp.LocalDateTime
 import java.io.File
 import java.io.FileOutputStream
 import java.io.Serializable
@@ -78,24 +81,45 @@ class ActionView(private val activity: ActionActivity) {
     private fun initSaveListener() {
         layout.toolbar_save.setOnClickListener {
             val lastId = activity.getLastId() + 1
-            if (validateData()) {
+            if (selected) {
                 layout.action_delete_pdf.visibility = TextView.VISIBLE
-                val action = Action()
-                val date1 = convertFromStringToDate(calendarDate, timePicker)
-                action.date = date1
-                action.category = category
-                if (category == "Income")
-                    action.amount = layout.action_amount_text.text.toString().toDouble()
-                else
-                    action.amount = -layout.action_amount_text.text.toString().toDouble()
-                action.details = layout.action_details_text.text.toString()
-                if (layout.action_details_pdf.drawable != null)
-                    action.detailsImage = lastId.toString() + "_pdf"
-                storeImageInFiles(lastId)
-                activity.addToDB(action)
+                updateAction(selectedAction)
                 activity.finishAct()
-            }
+
+            } else
+                if (validateData()) {
+                    layout.action_delete_pdf.visibility = TextView.VISIBLE
+                    val action = Action()
+                    val date1 = convertFromStringToDate(calendarDate, timePicker)
+                    action.date = date1
+                    action.category = category
+                    if (category == "Income")
+                        action.amount = layout.action_amount_text.text.toString().toDouble()
+                    else
+                        action.amount = -layout.action_amount_text.text.toString().toDouble()
+                    action.details = layout.action_details_text.text.toString()
+                    if (layout.action_details_pdf.drawable != null)
+                        action.detailsImage = lastId.toString() + "_pdf"
+                    storeImageInFiles(lastId)
+                    activity.addToDB(action)
+                    activity.finishAct()
+                }
         }
+    }
+
+    private fun updateAction(action: Action) {
+        if (calendarDate != "" && timePicker != "")
+            action.date = convertFromStringToDate(calendarDate, timePicker)
+        if (category != "")
+            action.category = category
+        action.amount = layout.action_amount_text.text.toString().toDouble()
+        action.details = layout.action_details_text.text.toString()
+        action.detailsImage
+        if (layout.action_details_pdf.drawable != null)
+            action.detailsImage = action.id.toString() + "_pdf"
+        storeImageInFiles(action.id.toInt())
+
+        activity.sendUpdatedAction(action)
     }
 
     private fun validateData(): Boolean {
@@ -183,26 +207,32 @@ class ActionView(private val activity: ActionActivity) {
         action as Action
         val localdatetime = DateUtils.convertDate(action.date)
         val calendar = Calendar.getInstance()
-        calendar.set(localdatetime.year, localdatetime.monthValue, localdatetime.dayOfMonth)
+        calendar.set(
+            localdatetime.year,
+            localdatetime.minusMonths(1).monthValue,
+            localdatetime.dayOfMonth
+        )
         val long = calendar.timeInMillis
-        layout.action_calendar.date = long
-
-        layout.action_amount_text.setText(action.amount.toString())
-        var categoryList = activity.passRecyclerData()
 
         //initiate recycler
-        val recycler = layout.action_recycler_view
-        val list = activity.passRecyclerData()
-        recycler.layoutManager =
-            GridLayoutManager(activity, 2, GridLayoutManager.HORIZONTAL, false)
-        recycler.adapter = ActionsAdapter(activity.baseContext, list, true, action.category)
+        initSelectedRecycler(action)
 
+        //update layout
+        initSelectedUpdateLayout(action, long, localdatetime)
+
+        //update VARIABLES
+        selected = true
+        selectedAction = action
+    }
+
+    private fun initSelectedUpdateLayout(action: Action, long: Long, localdatetime: LocalDateTime) {
+        layout.action_calendar.date = long
+        layout.action_amount_text.setText(action.amount.toString())
+        layout.action_details_text.setText(action.details)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             layout.action_time.hour = localdatetime.hour
             layout.action_time.minute = localdatetime.minute
         }
-
-        layout.action_details_text.setText(action.details)
         if (action.detailsImage.isNotEmpty()) {
             val path = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 File(activity.dataDir, "files" + File.separator + "Images")
@@ -216,7 +246,17 @@ class ActionView(private val activity: ActionActivity) {
         }
     }
 
+    private fun initSelectedRecycler(action: Action) {
+        val recycler = layout.action_recycler_view
+        val list = activity.passRecyclerData()
+        recycler.layoutManager =
+            GridLayoutManager(activity, 2, GridLayoutManager.HORIZONTAL, false)
+        recycler.adapter = ActionsAdapter(activity.baseContext, list, true, action.category)
+    }
+
     companion object {
         var category = ""
+        var selected = false
+        var selectedAction = Action()
     }
 }

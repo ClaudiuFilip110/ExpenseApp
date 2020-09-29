@@ -83,4 +83,8 @@ class UserRepository(private val db: AppDatabase) {
     fun getTotal(): Int {
         return db.actionDao().getTotal()
     }
+
+    fun updateAction(action: Action) {
+        return db.actionDao().updateAction(action)
+    }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
 import com.example.android_resources.R
+import com.example.android_resources.screens.action.ActionView
 import com.example.android_resources.screens.budget.BudgetFragment
 import com.example.android_resources.screens.converter.ConverterActivity
 import com.example.android_resources.screens.expenses.ExpensesFragment
@@ -36,6 +37,7 @@ class MainView(private val activity: MainActivity) {
     private fun initPlus() {
         layout.toolbar_plus.setOnClickListener {
             activity.startAction()
+            ActionView.selected = false
         }
     }
 

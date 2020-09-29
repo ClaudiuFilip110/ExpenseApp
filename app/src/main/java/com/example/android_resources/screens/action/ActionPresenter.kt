@@ -56,4 +56,8 @@ class ActionPresenter(
     fun getLastId(): Int {
         return userRepository.getLastId()
     }
+
+    fun updateAction(action: Action) {
+        return userRepository.updateAction(action)
+    }
 }

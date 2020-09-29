@@ -1,9 +1,6 @@
 package com.example.android_resources.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.android_resources.data.database.entities.Action
 import com.example.android_resources.data.database.entities.User
 import java.time.LocalDateTime
@@ -39,4 +36,7 @@ interface ActionDao {
 
     @Query("SELECT SUM(amount) from Actions")
     fun getTotal(): Int
+
+    @Update
+    fun updateAction(action: Action)
 }

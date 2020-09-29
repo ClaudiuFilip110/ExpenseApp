@@ -72,6 +72,10 @@ class ActionActivity : AppCompatActivity(), KoinComponent {
         return presenter.getLastId()
     }
 
+    fun sendUpdatedAction(action: Action) {
+        presenter.updateAction(action)
+    }
+
     companion object {
         fun start(activity: Activity) {
             val intent = Intent(activity, ActionActivity::class.java)
