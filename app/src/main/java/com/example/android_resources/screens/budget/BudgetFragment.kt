@@ -18,12 +18,11 @@ import java.util.*
 
 class BudgetFragment : Fragment(), KoinComponent {
     private val view: BudgetView by inject { parametersOf(this) }
-    private val presenter: BudgetPresenter by inject { parametersOf(view, get()) }
+    private val presenter: BudgetPresenter by inject { parametersOf(view, get(), get(), get()) }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        view.getBalanceUntilDate(Date())
     }
 
     override fun onCreateView(
@@ -33,12 +32,7 @@ class BudgetFragment : Fragment(), KoinComponent {
         // Inflate the layout for this fragment
         val v = view.layout
         view.setClickListeners(v)
-        presenter.setTitles()
-        presenter.setChart(v, resources)
+        presenter.initGetBalanceUntilDate(Date())
         return v
-    }
-
-    fun getBalanceUntilDate(date: Date): Double {
-        return presenter.getBalanceUntilDate(date)
     }
 }

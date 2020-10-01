@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.android_resources.R
 import com.example.android_resources.data.database.entities.Action
 import com.example.android_resources.screens.action.ActionActivity
+import com.example.android_resources.screens.action.passedObject
 import com.example.android_resources.screens.main.MainActivity
 import com.example.android_resources.utils.DateUtils
 import kotlinx.android.synthetic.main.recyclerview_expenses.view.*
@@ -43,12 +44,11 @@ class ExpensesAdapter(
     }
 
     override fun onBindViewHolder(holder: ExpensesViewHolder, position: Int) {
+        if (mPayments.size == 0 || mTotal.size == 0)
+            return
         val currentPayment = mPayments[position]
         val currentTotal = mTotal[position]
         holder.bind(context, currentPayment, currentTotal, resources)
-        //set image
-//        val intent = Intent(context,MainActivity::class.java)
-//        context.startActivity(intent)
     }
 
     class ExpensesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -92,7 +92,7 @@ class ExpensesAdapter(
             }
             cardView.setOnClickListener {
                 val intent = Intent(context as Activity, ActionActivity::class.java)
-                intent.putExtra("object", currentPayment)
+                intent.putExtra(passedObject, currentPayment)
                 context.startActivity(intent)
             }
         }

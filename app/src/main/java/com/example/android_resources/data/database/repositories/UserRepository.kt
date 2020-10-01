@@ -85,6 +85,6 @@ class UserRepository(private val db: AppDatabase) {
     }
 
     fun updateAction(action: Action) {
-        return db.actionDao().updateAction(action)
+        db.actionDao().updateAction(action)
     }
 }

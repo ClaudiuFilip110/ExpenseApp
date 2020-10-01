@@ -13,7 +13,7 @@ import org.koin.core.parameter.parametersOf
 
 class ExpensesUIFragment() : Fragment(), KoinComponent {
     private val view: ExpensesUIView by inject { parametersOf(this) }
-    private val presenter: ExpensesUIPresenter by inject { parametersOf(view, get()) }
+    private val presenter: ExpensesUIPresenter by inject { parametersOf(view, get(), get(), get()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +25,7 @@ class ExpensesUIFragment() : Fragment(), KoinComponent {
     ): View? {
         val v = view.layout
         view.setTitle(arguments?.get("total"))
-        val balanceList = presenter.getBalanceUntilDate(arguments?.get("name"))
-        val actionList = presenter.getListUntilDate(arguments?.get("name"))
-        view.setAdapter(arguments?.get("name"), actionList, balanceList, resources)
-        presenter.chart(v, arguments?.get("name"))
-
+        presenter.initGetActionsFromDB(arguments?.get("name"), resources)
         return v
     }
 }

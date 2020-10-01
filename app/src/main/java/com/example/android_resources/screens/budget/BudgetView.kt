@@ -1,5 +1,6 @@
 package com.example.android_resources.screens.budget
 
+import android.content.res.Resources
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -28,13 +29,17 @@ class BudgetView(private val fragment: BudgetFragment){
         }
     }
 
-    fun getBalanceUntilDate(date: Date) {
-        layout.budget_cur_bal_nr.text = fragment.getBalanceUntilDate(date).toString()
+    fun setBalanceUntilDate(budget: Double) {
+        layout.budget_cur_bal_nr.text = budget.toString()
     }
 
     fun updateCards(today: Double, week: Double, month: Double) {
         layout.budget_today_exp_nr.text = today.toString()
         layout.budget_week_exp_nr.text = week.toString()
         layout.budget_month_exp_nr.text = month.toString()
+    }
+
+    fun getResources(): Resources {
+        return fragment.resources
     }
 }

@@ -5,6 +5,7 @@ import com.example.android_resources.data.database.entities.Action
 import com.example.android_resources.data.database.repositories.UserRepository
 import com.example.android_resources.utils.DateUtils
 import org.threeten.bp.LocalDateTime
+import timber.log.Timber
 
 class ExpensesPresenter(val expensesView: ExpensesView, val userRepository: UserRepository) {
     fun getActions(): ArrayList<Action> {
@@ -35,11 +36,12 @@ class ExpensesPresenter(val expensesView: ExpensesView, val userRepository: User
         if (date.year == now.year) {
             if (date.month == now.month) {
                 if (date.dayOfMonth <= now.dayOfMonth) {
-                    if (date.dayOfMonth + 7 >= now.dayOfMonth)
+                    if (date.dayOfMonth + 7 > now.dayOfMonth)
                         week += action.amount
-                } else {
-                    if (date.dayOfMonth + 7 <= now.dayOfMonth)
-                        week += action.amount
+                }
+            } else if (date.plusMonths(1).month == now.month) {
+                if (date.dayOfMonth> now.minusDays(7).dayOfMonth) {
+                    week += action.amount
                 }
             }
         }

@@ -38,7 +38,7 @@ class ActionsAdapter(
     }
 
     override fun onBindViewHolder(holder: ActionsViewHolder, position: Int) {
-        holder.bind(context, mActions, cardViewList, position, selected, selectedCategory)
+        holder.bind(context, mActions[position], cardViewList, position, selected, selectedCategory)
     }
 
     class ActionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -48,13 +48,13 @@ class ActionsAdapter(
 
         fun bind(
             context: Context,
-            mActions: ArrayList<Action>,
+            mActions: Action,
             cardViewList: ArrayList<ConstraintLayout>,
             position: Int,
             selected: Boolean,
             selectedCategory: String
         ) {
-            val currentAction = mActions[position]
+            val currentAction = mActions
             cardViewList.add(card)
             //set image
             val imageRes = currentAction.category.toLowerCase()

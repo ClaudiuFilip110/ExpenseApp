@@ -2,39 +2,33 @@ package com.example.android_resources.screens.action
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.recyclerview.widget.RecyclerView
 import com.example.android_resources.data.database.entities.Action
 import com.example.android_resources.screens.main.MainActivity
-import com.jakewharton.threetenabp.AndroidThreeTen
 import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 import org.koin.core.context.GlobalContext.get
 import org.koin.core.parameter.parametersOf
-import java.io.File
-import java.io.FileOutputStream
+
+const val passedObject = "object"
 
 class ActionActivity : AppCompatActivity(), KoinComponent {
     private val view: ActionView by inject { parametersOf(this) }
-    private val presenter: ActionPresenter by inject { parametersOf(view, get()) }
+    private val presenter: ActionPresenter by inject { parametersOf(view, get(), get(), get()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.layout)
-        view.getRecycler()
-        isObjectPassed()
+        view.setRecycler()
+        checkForPassedObject()
     }
 
-    private fun isObjectPassed() {
-        if (intent.getSerializableExtra("object") == null) return
-        val action = intent.getSerializableExtra("object")
-        view.populateWithActivity(action)
+    private fun checkForPassedObject() {
+        if (intent.getParcelableExtra<Action>(passedObject) == null) return
+        val action = intent.getParcelableExtra<Action>(passedObject)
+        view.populateWithActionData(action)
     }
 
     fun passRecyclerData(): ArrayList<Action> {
@@ -68,8 +62,8 @@ class ActionActivity : AppCompatActivity(), KoinComponent {
         finish()
     }
 
-    fun getLastId(): Int {
-        return presenter.getLastId()
+    fun initLastId() {
+        return presenter.initLastId()
     }
 
     fun sendUpdatedAction(action: Action) {

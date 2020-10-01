@@ -29,6 +29,7 @@ class PieChart(var actions: ArrayList<Action>) {
 //        l.orientation = Legend.LegendOrientation.VERTICAL
 //        l.setDrawInside(false)
         chart.data = generatePieData()
+        chart.invalidate()
     }
 
     private fun uniqueTotalCategories(): Int {

@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import com.example.android_resources.R
 import kotlinx.android.synthetic.main.activity_converter.view.*
 import kotlinx.android.synthetic.main.toolbar_back_arrow.view.*
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.text.Typography.times
@@ -47,13 +48,13 @@ class ConverterView(private val activity: ConverterActivity) {
 
     private fun sendToAct() {
         if (!layout.converter_text_euro.text.isNullOrEmpty())
-            activity.receiveFromView("EUR", "RON", layout.converter_text_euro.text.toString())
+            activity.receiveFromView()
         else
-            Log.d("text", "euro block is empty")
+            Timber.d("euro block is empty")
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getRate(rate: String) {
+
+    fun setLeiAmount(rate: String) {
         val euro = layout.converter_text_euro.text.toString()
         val euroD = euro.toDouble()
         val rateD = rate.toDouble()

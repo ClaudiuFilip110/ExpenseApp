@@ -6,10 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
-import android.text.Editable
-import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,9 +17,9 @@ import com.example.android_resources.utils.DateUtils
 import kotlinx.android.synthetic.main.activity_action.view.*
 import kotlinx.android.synthetic.main.toolbar_back_arrow.view.*
 import org.threeten.bp.LocalDateTime
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
-import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,7 +39,7 @@ class ActionView(private val activity: ActionActivity) {
         initTimePicker()
     }
 
-    fun getRecycler() {
+    fun setRecycler() {
         val recycler = layout.action_recycler_view
         val list = activity.passRecyclerData()
         recycler.layoutManager =
@@ -64,7 +61,7 @@ class ActionView(private val activity: ActionActivity) {
 
     private fun initCalendar() {
         val calendar = Calendar.getInstance()
-        layout.action_calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
+        layout.action_calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
             calendar.set(year, month, dayOfMonth)
             val date = DateUtils.convertSimpleDate(calendar.time)
             calendarDate = date.toString()
@@ -80,31 +77,34 @@ class ActionView(private val activity: ActionActivity) {
 
     private fun initSaveListener() {
         layout.toolbar_save.setOnClickListener {
-            val lastId = activity.getLastId() + 1
-            if (selected) {
-                layout.action_delete_pdf.visibility = TextView.VISIBLE
-                updateAction(selectedAction)
-                activity.finishAct()
-
-            } else
-                if (validateData()) {
-                    layout.action_delete_pdf.visibility = TextView.VISIBLE
-                    val action = Action()
-                    val date1 = convertFromStringToDate(calendarDate, timePicker)
-                    action.date = date1
-                    action.category = category
-                    if (category == "Income")
-                        action.amount = layout.action_amount_text.text.toString().toDouble()
-                    else
-                        action.amount = -layout.action_amount_text.text.toString().toDouble()
-                    action.details = layout.action_details_text.text.toString()
-                    if (layout.action_details_pdf.drawable != null)
-                        action.detailsImage = lastId.toString() + "_pdf"
-                    storeImageInFiles(lastId)
-                    activity.addToDB(action)
-                    activity.finishAct()
-                }
+            activity.initLastId()
         }
+    }
+
+    fun saveWithLastId(lastId: Int) {
+        Timber.d("lastId is %s", lastId)
+        if (selected) {
+            layout.action_delete_pdf.visibility = TextView.VISIBLE
+            updateAction(selectedAction)
+            activity.finishAct()
+        } else
+            if (validateData()) {
+                layout.action_delete_pdf.visibility = TextView.VISIBLE
+                val action = Action()
+                val date1 = convertFromStringToDate(calendarDate, timePicker)
+                action.date = date1
+                action.category = category
+                if (category == "Income")
+                    action.amount = layout.action_amount_text.text.toString().toDouble()
+                else
+                    action.amount = -layout.action_amount_text.text.toString().toDouble()
+                action.details = layout.action_details_text.text.toString()
+                if (layout.action_details_pdf.drawable != null)
+                    action.detailsImage = lastId.toString() + "_pdf"
+                storeImageInFiles(lastId)
+                activity.addToDB(action)
+                activity.finishAct()
+            }
     }
 
     private fun updateAction(action: Action) {
@@ -201,10 +201,9 @@ class ActionView(private val activity: ActionActivity) {
         return true
     }
 
-    fun populateWithActivity(action: Serializable?) {
+    fun populateWithActionData(action: Action?) {
         if (action == null)
             return
-        action as Action
         val localdatetime = DateUtils.convertDate(action.date)
         val calendar = Calendar.getInstance()
         calendar.set(

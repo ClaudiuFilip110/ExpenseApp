@@ -27,14 +27,9 @@ val presentersModules: Module = module {
     factory { (view: LoginView) -> LoginPresenter(view, get()) }
     factory { (view: RegisterView) -> RegisterPresenter(view, get()) }
     factory { (view: ForgotView) -> ForgotPresenter(view, get()) }
-    factory { (view: ConverterView) -> ConverterPresenter(view, get()) }
-    factory { (view: ActionView) -> ActionPresenter(view, get()) }
-    factory { (view: BudgetView) -> BudgetPresenter(view, get()) }
-    factory { (view: ExpensesUIView) ->
-        ExpensesUIPresenter(
-            view,
-            get()
-        )
-    }
+    factory { (view: ConverterView) -> ConverterPresenter(view, get(), get(), get()) }
+    factory { (view: ActionView) -> ActionPresenter(view, get(), get(), get()) }
+    factory { (view: BudgetView) -> BudgetPresenter(view, get(), get(), get()) }
+    factory { (view: ExpensesUIView) -> ExpensesUIPresenter(view, get(), get(), get()) }
     factory { (view: ExpensesView) -> ExpensesPresenter(view, get()) }
 }

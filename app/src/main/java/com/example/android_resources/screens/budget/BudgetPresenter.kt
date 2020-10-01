@@ -6,25 +6,53 @@ import android.util.Log
 import android.view.View
 import com.example.android_resources.data.database.entities.Action
 import com.example.android_resources.data.database.repositories.UserRepository
+import com.example.android_resources.utils.Constants
 import com.example.android_resources.utils.DateUtils
+import com.example.android_resources.utils.rxUtils.AppRxSchedulers
+import com.example.android_resources.utils.rxUtils.disposeBy
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import java.text.SimpleDateFormat
 import org.threeten.bp.LocalDateTime;
+import timber.log.Timber
 import java.util.*
 
-class BudgetPresenter(val budgetView: BudgetView, val userRepository: UserRepository) {
-    fun getBalanceUntilDate(date: Date): Double {
-        for (action in userRepository.getActions()) {
-            Log.d("ACTION", action.toString())
-        }
-        return userRepository.getBalanceUntilDate(date)
+class BudgetPresenter(
+    val budgetView: BudgetView,
+    val userRepository: UserRepository,
+    val rxSchedulers: AppRxSchedulers,
+    val disposable: CompositeDisposable
+) {
+    fun initGetBalanceUntilDate(date: Date) {
+        Observable.just(Constants.EMPTY_STRING)
+            .observeOn(rxSchedulers.background())
+            .map { userRepository.getBalanceUntilDate(date) }
+            .observeOn(rxSchedulers.androidUI())
+            .subscribe({
+                budgetView.setBalanceUntilDate(it)
+            },{})
     }
 
-    fun getActions(): ArrayList<Action> {
-        return userRepository.getActions()
+    init {
+        initActions()
     }
 
-    fun setTitles() {
-        val actions = getActions()
+    private fun initActions() {
+        Observable.just(Constants.EMPTY_STRING)
+            .observeOn(rxSchedulers.background())
+            .map { userRepository.getActions() }
+            .observeOn(rxSchedulers.androidUI())
+            .subscribe({
+                setTitles(it)
+                setChart(it)
+                for (action in it) {
+                    Log.d("ACTION", action.toString())
+                }
+            }, { Timber.e(it.message) })
+            .disposeBy(disposable)
+    }
+
+    fun setTitles(actions: ArrayList<Action>) {
         var today = 0.0
         var week = 0.0
         var month = 0.0
@@ -58,11 +86,12 @@ class BudgetPresenter(val budgetView: BudgetView, val userRepository: UserReposi
         if (date.year == now.year) {
             if (date.month == now.month) {
                 if (date.dayOfMonth <= now.dayOfMonth) {
-                    if (date.dayOfMonth + 7 >= now.dayOfMonth)
+                    if (date.dayOfMonth + 7 > now.dayOfMonth)
                         week += action.amount
-                } else {
-                    if (date.dayOfMonth + 7 <= now.dayOfMonth)
-                        week += action.amount
+                }
+            } else if (date.plusMonths(1).month == now.month) {
+                if (date.dayOfMonth > now.minusDays(7).dayOfMonth) {
+                    week += action.amount
                 }
             }
         }
@@ -82,9 +111,10 @@ class BudgetPresenter(val budgetView: BudgetView, val userRepository: UserReposi
         return month
     }
 
-    fun setChart(v: View, resources: Resources) {
-        val data = BarData(getActions())
-        var chartData = data.createChartData(resources)
+    fun setChart(actions: ArrayList<Action>) {
+        val v = budgetView.layout
+        val data = BarData(actions, budgetView.getResources())
+        var chartData = data.createChartData()
         data.configureChartAppearance(v)
         data.prepareChartData(v, chartData)
     }

@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_budget.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class BarData(val actions: ArrayList<Action>) {
+class BarData(val actions: ArrayList<Action>, val resources: Resources) {
 
     fun prepareChartData(v: View, data: BarData) {
         data.setValueTextSize(12f)
@@ -38,7 +38,7 @@ class BarData(val actions: ArrayList<Action>) {
         return amount
     }
 
-    fun createChartData(resources: Resources): BarData {
+    fun createChartData(): BarData {
         val valuesPos: ArrayList<BarEntry> = ArrayList()
         val valuesNeg: ArrayList<BarEntry> = ArrayList()
         for (i in 0 until Constants.MAX_X_VALUE) {
@@ -52,7 +52,7 @@ class BarData(val actions: ArrayList<Action>) {
         }
         val set1 = BarDataSet(valuesPos, "Positive values")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            set1.color = resources.getColor(R.color.green, null)
+            set1.color = resources.getColor(R.color.colorPrimary, null)
         }
         val set2 = BarDataSet(valuesNeg, "Negative values")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
